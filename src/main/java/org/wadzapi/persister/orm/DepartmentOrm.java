@@ -1,4 +1,4 @@
-package org.wadzapi.orm;
+package org.wadzapi.persister.orm;
 
 import javax.persistence.*;
 

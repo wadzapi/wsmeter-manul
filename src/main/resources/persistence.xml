@@ -4,8 +4,8 @@
              version="2.0">
     <persistence-unit name="entityManager" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <class>main.java.org.wadzapi.orm.DepartmentOrm</class>
-        <class>main.java.org.wadzapi.orm.DepartmentOrm</class>
+        <class>main.java.org.wadzapi.persister.orm.DepartmentOrm</class>
+        <class>main.java.org.wadzapi.persister.orm.DepartmentOrm</class>
         <properties>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
             <property name="javax.persistence.jdbc.url"    value="jdbc:postgresql://localhost:5432/employees1" />
