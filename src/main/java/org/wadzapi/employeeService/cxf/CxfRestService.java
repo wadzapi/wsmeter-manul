@@ -1,4 +1,4 @@
-package com.lessonslab.cxfrestservice;
+package org.wadzapi.employeeService.cxf;
 
 import javax.jws.WebService;
 import javax.ws.rs.GET;

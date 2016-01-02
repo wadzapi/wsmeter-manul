@@ -1,5 +1,6 @@
 package org.wadzapi.persister;
 
+import org.springframework.stereotype.Component;
 import org.wadzapi.persister.orm.EmployeeOrm;
 
 import javax.persistence.Query;
@@ -8,6 +9,7 @@ import java.util.List;
 /**
  * Created by vadik on 02.01.16.
  */
+@Component
 public class EmployeeJpaPersiter implements Persister<EmployeeOrm> {
 
     @Override

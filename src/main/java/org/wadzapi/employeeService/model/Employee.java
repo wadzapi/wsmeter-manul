@@ -1,4 +1,4 @@
-package com.lessonslab.cxfrestservice.model;
+package org.wadzapi.employeeService.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
