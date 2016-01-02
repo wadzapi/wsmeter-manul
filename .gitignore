@@ -1,5 +1,6 @@
 target/
 .idea/
 **/*.trace.db
-**/*.iml
+*.iml
 **/*.mv.db
+dumps/
