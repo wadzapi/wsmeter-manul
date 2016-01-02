@@ -1,10 +1,6 @@
 package org.wadzapi.persister;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -12,18 +8,9 @@ import java.util.List;
  */
 public interface Persister<T> {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAService");
+    Query createQuery(String query);
 
-    EntityManager entityManager = emf.createEntityManager();
-
-    default Query createQuery(String query) {
-        return entityManager.createQuery(query);
-    }
-
-    @Transactional
-    default void persist(T persistObject) {
-        entityManager.persist(persistObject);
-    }
+    void persist(T persistObject);
 
     List<T> load();
 }

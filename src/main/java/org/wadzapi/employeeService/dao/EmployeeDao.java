@@ -3,12 +3,14 @@ package org.wadzapi.employeeService.dao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.wadzapi.employeeService.model.Employee;
 import org.wadzapi.persister.Persister;
 import org.wadzapi.persister.orm.EmployeeOrm;
 
 import java.util.List;
 
+@Component
 public class EmployeeDao 
 {
 

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by vadik on 02.01.16.
  */
-public class DepartmentJpaPersiter implements Persister<DepartmentOrm> {
+public class DepartmentJpaPersiter extends AbstractPersister<DepartmentOrm> {
 
     @Override
     public List<DepartmentOrm> load() {

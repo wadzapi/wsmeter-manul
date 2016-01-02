@@ -2,8 +2,10 @@ package org.wadzapi.persister.orm;
 
 import javax.persistence.*;
 
-
-
+/**
+ * Сущнсоть департамент
+ */
+@Entity
 @Table(name ="departments")
 public class DepartmentOrm {
 
@@ -13,9 +15,6 @@ public class DepartmentOrm {
 
     @Column(name = "department_name")
     private String name;
-
-    @OneToMany(mappedBy = "employee")
-    private DepartmentOrm departmentOrm;
 
 
     public long getId() {
@@ -34,13 +33,4 @@ public class DepartmentOrm {
     public void setName(String name) {
         this.name = name;
     }
-
-    public DepartmentOrm getDepartmentOrm() {
-        return departmentOrm;
-    }
-
-    public void setDepartmentOrm(DepartmentOrm departmentOrm) {
-        this.departmentOrm = departmentOrm;
-    }
-
 }

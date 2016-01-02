@@ -10,7 +10,7 @@ import java.util.List;
  * Created by vadik on 02.01.16.
  */
 @Component
-public class EmployeeJpaPersiter implements Persister<EmployeeOrm> {
+public class EmployeeJpaPersiter extends AbstractPersister<EmployeeOrm> {
 
     @Override
     public List<EmployeeOrm> load() {

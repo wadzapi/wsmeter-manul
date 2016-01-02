@@ -6,9 +6,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by vadik on 02.01.16.
+ * Сущность "Работник"
  */
 @Entity
+@Table(name = "employees")
 public class EmployeeOrm {
 
     @Id
@@ -122,16 +123,16 @@ public class EmployeeOrm {
         this.managerId = managerId;
     }
 
-    @ManyToOne(targetEntity = DepartmentOrm.class)
-    @JoinColumn(name="employee_id", referencedColumnName="department_id")
-    private List<DepartmentOrm> departmentOrmList;
 
+    @ManyToOne
+    @JoinColumn(name="department_id")
+    private DepartmentOrm department;
 
-    public List<DepartmentOrm> getDepartmentOrmList() {
-        return departmentOrmList;
+    public DepartmentOrm getDepartment() {
+        return department;
     }
 
-    public void setDepartmentOrmList(List<DepartmentOrm> departmentOrmList) {
-        this.departmentOrmList = departmentOrmList;
+    public void setDepartment(DepartmentOrm department) {
+        this.department = department;
     }
 }

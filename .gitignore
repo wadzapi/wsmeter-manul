@@ -3,4 +3,6 @@ target/
 **/*.trace.db
 *.iml
 **/*.mv.db
+dumps
 dumps/
+

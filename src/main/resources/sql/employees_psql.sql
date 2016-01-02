@@ -41,3 +41,5 @@ INSERT INTO employees VALUES(1, 'Кирилл Петрович', 'Шниперс
 INSERT INTO employees VALUES(2, 'Валентина', 'Касикова', 'kasilkiva@test', '+3(423)332-31-13', current_timestamp, 0, 1, 0.23, 0,300);
 INSERT INTO employees VALUES(3, 'Оксана', 'Продавшкина','prodovashkina@test', '+3(423)332-33-33', current_timestamp, 0, 1, 0.23, 0,481);
 INSERT INTO employees VALUES(4, 'Максим', 'Шубин', 'shubin@test', '+3(423)332-44-44', current_timestamp, 0, 1, 0.23, 0,481);
+
+alter table employees ADD  FOREIGN KEY(department_id) references departments;
