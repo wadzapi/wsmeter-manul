@@ -1,15 +1,14 @@
-package org.wadzapi.persister.orm;
+package org.wadzapi.employeeService.persist.orm;
 
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Сущность "Работник"
  */
 @Entity
-@Table(name = "employees")
+@Table(name = "EMPLOYEES")
 public class EmployeeOrm {
 
     @Id
@@ -122,7 +121,6 @@ public class EmployeeOrm {
     public void setManagerId(long managerId) {
         this.managerId = managerId;
     }
-
 
     @ManyToOne
     @JoinColumn(name="department_id")

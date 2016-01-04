@@ -9,19 +9,16 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- * 
- * @author lessonslab.com
- * This is interface for the employee services
  *
  */
 @Path("/")
-@WebService(name="employeeService", targetNamespace="http://www.lessonslab.com/cxf-rest/example")
+@WebService(name= "employeeService", targetNamespace="http://wadzapi.org/cxf-rest/example")
 public interface CxfRestService 
 {
 	
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Path("/getemployeedetail")
-	public Response getEmployeeDetail(@QueryParam("employeeId") String employeeId);
+	Response getEmployeeDetail(@QueryParam("employeeId") String employeeId);
 	
 }

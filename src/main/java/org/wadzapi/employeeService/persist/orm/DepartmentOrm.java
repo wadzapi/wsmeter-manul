@@ -1,4 +1,4 @@
-package org.wadzapi.persister.orm;
+package org.wadzapi.employeeService.persist.orm;
 
 import javax.persistence.*;
 
@@ -6,11 +6,12 @@ import javax.persistence.*;
  * Сущнсоть департамент
  */
 @Entity
-@Table(name ="departments")
+@Table(name ="DEPARTMENTS")
 public class DepartmentOrm {
 
     @Id
-    @Column(name = "department_id")
+    @GeneratedValue
+    @Column(name = "department_id", unique = true, nullable = false)
     private long id;
 
     @Column(name = "department_name")

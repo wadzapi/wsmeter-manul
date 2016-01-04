@@ -4,11 +4,10 @@ import com.opensymphony.xwork2.ActionSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.wadzapi.persister.DepartmentJpaPersiter;
-import org.wadzapi.persister.EmployeeJpaPersiter;
-import org.wadzapi.persister.Persister;
-import org.wadzapi.persister.orm.DepartmentOrm;
-import org.wadzapi.persister.orm.EmployeeOrm;
+import org.wadzapi.employeeService.persist.dao.DepartmentJpaDao;
+import org.wadzapi.employeeService.persist.dao.EmployeeJpaDao;
+import org.wadzapi.employeeService.persist.orm.DepartmentOrm;
+import org.wadzapi.employeeService.persist.orm.EmployeeOrm;
 
 import java.util.List;
 
@@ -17,9 +16,9 @@ public class DataPersister extends ActionSupport {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DataPersister.class);
 
-    private Persister departmentsPersister;
+    private DepartmentJpaDao departmentsPersister;
 
-    private Persister employeePersister = new EmployeeJpaPersiter();
+    private EmployeeJpaDao employeePersister;
 
     private List<DepartmentOrm> departments;
 
@@ -27,10 +26,10 @@ public class DataPersister extends ActionSupport {
 
 
     public DataPersister() {
-        departmentsPersister = new DepartmentJpaPersiter();
-        departments = new DepartmentJpaPersiter().load();
-        employeePersister = new EmployeeJpaPersiter();
-        employees = employeePersister.load();
+        departmentsPersister = new DepartmentJpaDao();
+        departments = departmentsPersister.findAll();
+        employeePersister = new EmployeeJpaDao();
+        employees = employeePersister.findAll();
     }
 
 

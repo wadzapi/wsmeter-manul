@@ -1,13 +1,12 @@
 package org.wadzapi.employeeService.cxf;
 
-import javax.ws.rs.core.Response;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Component;
-import  org.wadzapi.employeeService.dao.EmployeeDao;
+import org.wadzapi.employeeService.EmployeeInfoProvider;
+
+import javax.ws.rs.core.Response;
 
 @Component
 public class CxfRestServiceImpl implements CxfRestService {
@@ -15,7 +14,7 @@ public class CxfRestServiceImpl implements CxfRestService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CxfRestServiceImpl.class);
 	
 	@Autowired
-	private EmployeeDao employeeDao;
+	private EmployeeInfoProvider employeeInfoProvider;
 
 	@Override
 	public Response getEmployeeDetail(String employeeId) 
@@ -28,12 +27,12 @@ public class CxfRestServiceImpl implements CxfRestService {
 		}
 		try {
 			long empId = Long.parseLong(employeeId);
-			return Response.ok(employeeDao.getPersistedEmployee(empId)).build();
+			return Response.ok(employeeInfoProvider.getEmployeeById((empId))).build();
 
 		} catch (RuntimeException e) {
 			LOGGER.error(logMsg, "Ошибка разбора запроса", employeeId);
 			LOGGER.debug("Клиенту будет отправлена загрушка ответа!!!!");
-			return Response.ok(employeeDao.getEmployeeDetailsFake(employeeId)).build();
+			return Response.ok(employeeInfoProvider.getEmployeeDetailsFake(employeeId)).build();
 
 		} catch (Exception e) {
 			LOGGER.error(logMsg, "Ошибка разбора запроса", employeeId);

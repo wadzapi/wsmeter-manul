@@ -1,27 +1,27 @@
-package org.wadzapi.employeeService.dao;
+package org.wadzapi.employeeService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.wadzapi.employeeService.model.Employee;
-import org.wadzapi.persister.Persister;
-import org.wadzapi.persister.orm.EmployeeOrm;
+import org.wadzapi.employeeService.persist.dao.Dao;
+import org.wadzapi.employeeService.persist.orm.EmployeeOrm;
 
 import java.util.List;
 
 @Component
-public class EmployeeDao 
+public class EmployeeInfoProvider
 {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeDao.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeInfoProvider.class);
 
 	@Autowired
-	private Persister<EmployeeOrm> employeePersister;
+	private Dao<EmployeeOrm> employeeDao;
 
 	@Autowired
-	public EmployeeDao(Persister<EmployeeOrm> employeePersister) {
-		this.employeePersister = employeePersister;
+	public EmployeeInfoProvider(Dao<EmployeeOrm> employeeDao) {
+		this.employeeDao = employeeDao;
 	}
 
 	public Employee getEmployeeDetailsFake(String employeeId)
@@ -42,10 +42,10 @@ public class EmployeeDao
 
 
 	public List<EmployeeOrm> getPersistedEmployees() {
-		return employeePersister.load();
+		return employeeDao.findAll();
 	}
 
-	public List<EmployeeOrm> getPersistedEmployee(long empId) {
-		return employeePersister.load();
+	public EmployeeOrm getEmployeeById(long empId) {
+		return employeeDao.findOne(empId);
 	}
 }

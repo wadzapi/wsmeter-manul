@@ -9,6 +9,5 @@
 </head>
 <body>
     CXF RESTful service tutorial
-
 </body>
 </html>
