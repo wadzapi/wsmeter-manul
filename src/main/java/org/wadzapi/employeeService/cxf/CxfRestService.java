@@ -9,13 +9,19 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- *
+ * Интерфейс веб-сервиса информации о работниках
  */
 @Path("/")
 @WebService(name= "employeeService", targetNamespace="http://wadzapi.org/cxf-rest/example")
 public interface CxfRestService 
 {
-	
+
+	/**
+	 * Метод получения информации о работнике по идентификатору
+	 *
+	 * @param employeeId идентификатор сущности
+	 * @return ответ с информацией о работнике
+	 */
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Path("/getemployeedetail")

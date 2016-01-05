@@ -11,28 +11,53 @@ import org.wadzapi.employeeService.persist.orm.EmployeeOrm;
 
 import java.util.List;
 
+/**
+ * Класс-действие для сохранения информации о работнике
+ */
 @Component
-public class DataPersister extends ActionSupport {
+public class EmployeePersist extends ActionSupport {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataPersister.class);
+    /**
+     * Логгер
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmployeePersist.class);
 
+    /**
+     * DAO для работы с сущность "Департамент"
+     */
     private DepartmentJpaDao departmentsPersister;
 
+    /**
+     * DAO для работы с сущностью "Работник"
+     */
     private EmployeeJpaDao employeePersister;
 
+    /**
+     * Список департаментов
+     */
     private List<DepartmentOrm> departments;
 
+    /**
+     * Список работников
+     */
     private List<EmployeeOrm> employees;
 
-
-    public DataPersister() {
+    /**
+     * Конструктор класса
+     */
+    public EmployeePersist() {
         departmentsPersister = new DepartmentJpaDao();
         departments = departmentsPersister.findAll();
         employeePersister = new EmployeeJpaDao();
         employees = employeePersister.findAll();
     }
 
-
+    /**
+     * Метод выполнения действия
+     *
+     * @return результат выполнения действия
+     * @throws Exception ошибка при выполнении действий
+     */
     public String execute() throws Exception {
         final String logMsg = "{} выполенения действия сохранения состояния сущностей";
         LOGGER.info(logMsg, "Начало");
