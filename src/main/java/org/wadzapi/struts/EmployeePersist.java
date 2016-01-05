@@ -3,6 +3,7 @@ package org.wadzapi.struts;
 import com.opensymphony.xwork2.ActionSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.wadzapi.employeeService.persist.dao.DepartmentJpaDao;
 import org.wadzapi.employeeService.persist.dao.EmployeeJpaDao;
@@ -45,10 +46,11 @@ public class EmployeePersist extends ActionSupport {
     /**
      * Конструктор класса
      */
-    public EmployeePersist() {
-        departmentsPersister = new DepartmentJpaDao();
+    @Autowired
+    public EmployeePersist(DepartmentJpaDao departmentJpaDao, EmployeeJpaDao employeeJpaDao) {
+        this.departmentsPersister = departmentJpaDao;
         departments = departmentsPersister.findAll();
-        employeePersister = new EmployeeJpaDao();
+        this.employeePersister = employeeJpaDao;
         employees = employeePersister.findAll();
     }
 
