@@ -1,28 +1,32 @@
 package org.wadzapi.employeeService.persist.dao;
 
-import javax.persistence.*;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 /**
  * Абстрактный класс DAO для работы с сущностями предметной области через Hibernate
  */
+@Repository
 public abstract class AbstractHibernateDao<T> implements Dao<T> {
-
-    /**
-     * Имя persistant-unit, используемое в проекте в продуктовом профиле
-     */
-    private static final String PERSIST_UNIT_NAME = "PersistenceUnit";
 
     /**
      * Класс, используемый в сохраняемой сущности
      */
     private final Class<T> persistedClazz;
 
+    protected EntityManager entityManager;
+
     /**
      * Менеджерр для работы с сущностями
      */
-    @PersistenceContext
-    EntityManager entityManager;
+    @PersistenceContext(name = "PersistenceUnit")
+    public void setEntityManagerFactory(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     /**
      * Конструктор класса
@@ -31,19 +35,6 @@ public abstract class AbstractHibernateDao<T> implements Dao<T> {
      */
     protected AbstractHibernateDao(Class<T> persistedClazz) {
         this.persistedClazz = persistedClazz;
-        this.entityManager = createEntityManager();
-
-    }
-
-    /**
-     * Метод создания менеджера сущностей
-     *
-     * @return менеджер сущностей
-     */
-    private static EntityManager createEntityManager() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSIST_UNIT_NAME);
-        EntityManager entityManager = emf.createEntityManager();
-        return entityManager;
     }
 
     /**
@@ -76,6 +67,7 @@ public abstract class AbstractHibernateDao<T> implements Dao<T> {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("unchecked")
     public List<T> findAll() {
         return entityManager.createQuery( "from " + persistedClazz.getName()).getResultList();
     }

@@ -20,6 +20,7 @@
     </properties>
     <build>
         <plugins>
+            <!-- Компиляция исходников -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -29,7 +30,45 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <!-- Вызов задач подготовки тестовых ресурсов -->
+            <!-- TODO Заменить бекапирование на подключение в тестах ресурса с др. имененем и удаление -->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.3</version>
+                <executions>
+                    <execution>
+                        <id>copy-test-persistence</id>
+                        <phase>process-test-resources</phase>
+                        <configuration>
+                            <tasks>
+                                <copy file="${project.build.testOutputDirectory}/data/employees.h2"
+                                      tofile="${project.build.testOutputDirectory}/data/employees_test.h2"/>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>restore-persistence</id>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <tasks>
+                                <!--<delete file="${project.build.testOutputDirectory}/data/employees_test.h2" />-->
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+        <testResources>
+            <testResource>
+                <directory>${project.basedir}/src/test/resources</directory>
+            </testResource>
+        </testResources>
     </build>
     <dependencies>
         <dependency>
@@ -43,7 +82,7 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
-            <scope>runtime</scope>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -102,7 +141,12 @@
             <artifactId>spring-beans</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        <!-- struts.xmlLogger -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!-- Logger dependency -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -112,6 +156,18 @@
             <groupId>org.apache.struts</groupId>
             <artifactId>struts2-core</artifactId>
             <version>2.5-BETA2</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>3.0.5.RELEASE</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <profiles>

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.wadzapi.employeeService.converter.EmployeeConverter;
 import org.wadzapi.employeeService.model.Employee;
-import org.wadzapi.employeeService.persist.dao.Dao;
+import org.wadzapi.employeeService.persist.dao.EmployeeJpaDao;
 import org.wadzapi.employeeService.persist.orm.EmployeeOrm;
 
 /**
@@ -24,7 +24,7 @@ public class DbEmployeeHandler implements EmployeeHandler {
      * DAO для работы с сущностью работника
      */
     @Autowired
-    private Dao<EmployeeOrm> employeeDao;
+    private EmployeeJpaDao employeeDao;
 
     @Autowired
     private EmployeeConverter employeeConverter;
