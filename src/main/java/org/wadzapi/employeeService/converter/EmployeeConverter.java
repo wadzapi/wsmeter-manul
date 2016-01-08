@@ -66,17 +66,17 @@ public class EmployeeConverter {
     public EmployeeOrm convertToOrm(Employee employee) {
         final String logMsg = "{} конвертации из сущности \"Работник\" в orm";
         LOGGER.debug(logMsg, "Начало");
-        EmployeeOrm employeeOrm = new EmployeeOrm();
-        employeeOrm.setId(Long.valueOf(employee.getEmployeeId()));
         LocalDateTime localDateTime = LocalDateTime.parse(employee.getDateOfJoining(), DATE_TIME_FORMATTER);
-        employeeOrm.setHireDate(Date.from(localDateTime.toInstant(ZoneOffset.UTC)));
-        DepartmentOrm departmentOrm = new DepartmentOrm();
-        departmentOrm.setName(employee.getDepartment());
-        employeeOrm.setDepartment(departmentOrm);
-        employeeOrm.setEmail(employee.getEmail());
-        employeeOrm.setFirstName(employee.getFirstName());
-        employeeOrm.setLastName(employee.getLastName());
+        EmployeeOrm.EmployeeOrmBuilder employeeOrmBuilder = new EmployeeOrm.EmployeeOrmBuilder();
+        DepartmentOrm.DepartmentOrmBuilder departmentOrmBuilder = new DepartmentOrm.DepartmentOrmBuilder();
+        departmentOrmBuilder.setName(employee.getDepartment());
+        employeeOrmBuilder.setId(Long.valueOf(employee.getEmployeeId()))
+                .setHireDate(Date.from(localDateTime.toInstant(ZoneOffset.UTC)))
+                .setDepartment(departmentOrmBuilder.build())
+                .setEmail(employee.getEmail())
+                .setFirstName(employee.getFirstName())
+                .setLastName(employee.getLastName());
         LOGGER.debug(logMsg, "Конец");
-        return null;
+        return employeeOrmBuilder.build();
     }
 }

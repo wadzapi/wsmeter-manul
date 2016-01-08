@@ -1,5 +1,7 @@
 package org.wadzapi.employeeService.persist.dao;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +11,10 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.wadzapi.employeeService.persist.orm.DepartmentOrm;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * Юнит-тесты методов класса {@link DepartmentJpaDao}
@@ -23,15 +25,25 @@ import static org.junit.Assert.assertNotNull;
 @Transactional
 public class DepartmentJpaDaoTest {
 
-    /*
-        TODO Доработать тесты DAO
+    /**
+     * Эталонный список департаментов, загруженных из тестовой БД
      */
+    private static List<DepartmentOrm> referenceDepartmentOrmList;
 
     /**
      * Тестовый экземпляр DAO для работы с сущностью "Департамент"
      */
     @Autowired
     private DepartmentJpaDao departmentJpaDao;
+
+    @BeforeClass
+    public static void setUpClass() {
+        List<DepartmentOrm> initDepartmentOrmList = new ArrayList<>();
+        DepartmentOrm.DepartmentOrmBuilder departmentOrmBuilder = new DepartmentOrm.DepartmentOrmBuilder();
+        initDepartmentOrmList.add(departmentOrmBuilder.setId(280L).setName("IT").build());
+        initDepartmentOrmList.add(departmentOrmBuilder.setId(290L).setName("Sales").build());
+        referenceDepartmentOrmList = initDepartmentOrmList;
+    }
 
     /**
      * Юнит-тест для метода {@link DepartmentJpaDao#findOne(long)}
@@ -40,10 +52,16 @@ public class DepartmentJpaDaoTest {
      */
     @Test
     public void testFindOne() throws Exception {
-        DepartmentOrm departmentOrm = departmentJpaDao.findOne(300L);
+        //IT
+        DepartmentOrm departmentOrm = departmentJpaDao.findOne(280L);
         assertNotNull(departmentOrm);
-        assertEquals(300L, departmentOrm.getId());
+        assertEquals(280L, departmentOrm.getId());
         assertEquals("IT", departmentOrm.getName());
+        //Sales
+        departmentOrm = departmentJpaDao.findOne(290L);
+        assertNotNull(departmentOrm);
+        assertEquals(290L, departmentOrm.getId());
+        assertEquals("Sales", departmentOrm.getName());
     }
 
     /**
@@ -56,5 +74,6 @@ public class DepartmentJpaDaoTest {
         List<DepartmentOrm> departmentOrmList = departmentJpaDao.findAll();
         assertNotNull(departmentOrmList);
         assertEquals(2, departmentOrmList.size());
+        assertTrue(EqualsBuilder.reflectionEquals(referenceDepartmentOrmList, departmentOrmList));
     }
 }
