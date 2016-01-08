@@ -13,13 +13,15 @@
 - Apache CXF
 - JPA (Hibernate Entity Manager)
 - Struts 2
+- 
 
 ### Список TODO:
  - Настроить JPA-конфиги на использование файловой БД (h2) в тестах
  - Поправить типы данных в БД на varchar, исправить тесты
 
 ### Заметки:
-1. [Для запроса к локальному веб-сервису](http://localhost:8080/restService01-1.0-SNAPSHOT/rest/employeeservices/getemployeedetail?employeeId=1)
+1. За основу БД принят порт набора данных "Работники" из проекта [postgres9postgres8employees](https://bitbucket.org/wrightsolutions/postgres9postgres8employees)
+2. [Для запроса к локальному веб-сервису](http://localhost:8080/restService01-1.0-SNAPSHOT/rest/employeeservices/getemployeedetail?employeeId=1)
 2. Пароли к локальным и файловым БД:
         sa;'' - h2
-        restadmin01:'123456' - psql
+        restadmin01:'123456' - wrightemployees (psql 9.4)

@@ -27,7 +27,6 @@ public class EmployeeJpaDaoTest {
 
     /*
         TODO Доработать тесты DAO
-        TODO Поправить типы данных на VARCHAR и убрать trim
      */
     /**
      * Тестовый экземпляр DAO для работы с сущностью "Работник"
@@ -45,7 +44,7 @@ public class EmployeeJpaDaoTest {
     public void testFindOne() throws Exception {
         EmployeeOrm employeeOrm = employeeJpaDao.findOne(1L);
         assertNotNull(employeeOrm);
-        assertEquals("Кирилл Петрович", employeeOrm.getFirstName().trim());
+        assertEquals("Кирилл Петрович", employeeOrm.getFirstName());
         assertEquals("Шниперсон", employeeOrm.getLastName());
         assertEquals("snippersonchik_a@test", employeeOrm.getEmail());
         assertNull(employeeOrm.getPhone());
@@ -55,7 +54,7 @@ public class EmployeeJpaDaoTest {
         DepartmentOrm departmentOrm = employeeOrm.getDepartment();
         assertNotNull(departmentOrm);
         assertEquals(300, departmentOrm.getId());
-        assertEquals("IT", departmentOrm.getName().trim());
+        assertEquals("IT", departmentOrm.getName());
     }
 
     /**

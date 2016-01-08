@@ -26,7 +26,7 @@
     </jaxrs:server>
 
     <!-- ************ Spring beans *********** -->
-    <bean id="cxfRestService" class="org.wadzapi.employeeService.cxf.CxfRestServiceImpl"/>
+    <bean id="cxfRestService" class="org.wadzapi.employeeService.cxf.CxfRestServiceImpl"/>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 
     <!-- ************ JPA configuration *********** -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -36,6 +36,7 @@
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <property name="showSql" value="true"/>
+                <property name="databasePlatform" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
             </bean>
         </property>
     </bean>

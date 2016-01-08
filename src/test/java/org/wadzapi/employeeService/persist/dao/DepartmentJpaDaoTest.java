@@ -25,7 +25,6 @@ public class DepartmentJpaDaoTest {
 
     /*
         TODO Доработать тесты DAO
-        TODO Поправить типы данных на VARCHAR и убрать trim
      */
 
     /**
@@ -44,7 +43,7 @@ public class DepartmentJpaDaoTest {
         DepartmentOrm departmentOrm = departmentJpaDao.findOne(300L);
         assertNotNull(departmentOrm);
         assertEquals(300L, departmentOrm.getId());
-        assertEquals("IT", departmentOrm.getName().trim());
+        assertEquals("IT", departmentOrm.getName());
     }
 
     /**

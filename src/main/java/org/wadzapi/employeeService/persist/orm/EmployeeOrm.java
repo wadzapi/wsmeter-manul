@@ -15,68 +15,68 @@ public class EmployeeOrm {
      * Идентификатор сущности
      */
     @Id
-    @Column(name = "employee_id")
+    @Column(name = "EMPLOYEE_ID")
     private long id;
 
     /**
      * Имя работника
      */
-    @Column(name = "first_name")
+    @Column(name = "FIRST_NAME")
     private String firstName;
 
     /**
      * Фамилия работника
      */
-    @Column(name = "last_name")
+    @Column(name = "LAST_NAME")
     private String lastName;
 
     /**
      * Email
      */
-    @Column(name = "email")
+    @Column(name = "EMAIL")
     private String email;
 
     /**
      * Номер телефона
      */
-    @Column(name = "phoneNumber")
+    @Column(name = "PHONE_NUMBER")
     private String phone;
 
     /**
      * Дата наема
      */
-    @Column(name="hire_date")
+    @Column(name="HIRE_DATE")
     private Date hireDate;
 
     /**
      * Идентификатор профессии
      */
-    @Column(name = "job_id")
+    @Column(name = "JOB_ID")
     private long jobId;
 
     /**
      * Зарплата
      */
-    @Column(name="salary")
+    @Column(name="SALARY")
     private BigInteger salary;
 
     /**
      * Налог
      */
-    @Column(name = "commision_pct")
+    @Column(name = "COMMISSION_PCT")
     private Double commisionPct;
 
     /**
      * Идентификатор менеджера
      */
-    @Column(name = "manager_id")
+    @Column(name = "MANAGER_ID")
     private long managerId;
 
     /**
      * Департамент
      */
     @ManyToOne
-    @JoinColumn(name = "department_id")
+    @JoinColumn(name = "DEPARTMENT_ID")
     private DepartmentOrm department;
 
     /**

@@ -1,6 +1,7 @@
 package org.wadzapi.employeeService.persist.dao;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -48,8 +49,7 @@ public abstract class AbstractHibernateDao<T> implements Dao<T> {
     /**
      * {@inheritDoc}
      */
-    //TODO Разобраться с транзакционностью
-    //@Transactional
+    @Transactional
     @Override
     public void persist(T persistObject) {
         entityManager.persist(persistObject);
