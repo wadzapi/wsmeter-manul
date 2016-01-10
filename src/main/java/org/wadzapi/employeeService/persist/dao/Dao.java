@@ -28,7 +28,7 @@ public interface Dao<T> {
      * @param id идентификатор сущности
      * @return сущность с указанным идентификтором
      */
-    T findOne(long id);
+    T findOne(Object id);
 
     /**
      * Метод поиска полного списка сущностей

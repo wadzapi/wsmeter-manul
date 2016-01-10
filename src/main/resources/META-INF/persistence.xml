@@ -10,11 +10,11 @@
         <class>org.wadzapi.employeeService.persist.orm.EmployeeOrm</class>
         <properties>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/employees1"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/wrightemployees"/>
             <property name="javax.persistence.jdbc.user" value="restadmin01"/>
             <property name="javax.persistence.jdbc.password" value="123456"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="validate"/>
             <property name="connection.pool_size" value="10"/>
             <property name="hibernate.archive.autodetection" value="class, hbm"/>
             <property name="show_sql" value="true"/>

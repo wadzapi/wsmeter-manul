@@ -1,8 +1,8 @@
 package org.wadzapi.employeeService.persist.orm;
 
 import javax.persistence.*;
-import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 
 /*
     TODO Подумать над сокращение бойлерплейтного кода
@@ -22,8 +22,15 @@ public class EmployeeOrm {
      */
     @Id
     @Access(AccessType.FIELD)
-    @Column(name = "EMPLOYEE_ID")
+    @Column(name = "EMP_NO")
     private long id;
+
+    /**
+     * Дата рождения
+     */
+    @Access(AccessType.FIELD)
+    @Column(name = "BIRTH_DATE")
+    private Date birthDate;
 
     /**
      * Имя работника
@@ -40,18 +47,11 @@ public class EmployeeOrm {
     private String lastName;
 
     /**
-     * Email
+     * Пол
      */
     @Access(AccessType.FIELD)
-    @Column(name = "EMAIL")
-    private String email;
-
-    /**
-     * Номер телефона
-     */
-    @Access(AccessType.FIELD)
-    @Column(name = "PHONE_NUMBER")
-    private String phone;
+    @Column(name = "GENDER")
+    private String gender;
 
     /**
      * Дата наема
@@ -61,40 +61,22 @@ public class EmployeeOrm {
     private Date hireDate;
 
     /**
-     * Идентификатор профессии
+     * Дата увольнения
      */
     @Access(AccessType.FIELD)
-    @Column(name = "JOB_ID")
-    private long jobId;
+    @Column(name = "LEAVE_DATE")
+    private Date leaveDate;
 
     /**
-     * Зарплата
+     * Список департаментаментов работника
      */
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "DEPT_EMP",
+            joinColumns = {@JoinColumn(name = "DEPT_NO", referencedColumnName = "EMP_NO")})
     @Access(AccessType.FIELD)
-    @Column(name = "SALARY")
-    private BigInteger salary;
-
-    /**
-     * Налог
-     */
-    @Access(AccessType.FIELD)
-    @Column(name = "COMMISSION_PCT")
-    private Double commisionPct;
-
-    /**
-     * Идентификатор менеджера
-     */
-    @Access(AccessType.FIELD)
-    @Column(name = "MANAGER_ID")
-    private long managerId;
-
-    /**
-     * Департамент
-     */
-    @ManyToOne
-    @Access(AccessType.FIELD)
-    @JoinColumn(name = "DEPARTMENT_ID")
-    private DepartmentOrm department;
+    //TODO Допилить маппинги manyToMany и добавить в тесты
+    @Transient
+    private List<DepartmentOrm> departmentList;
 
     /**
      * Конструктор класса
@@ -110,14 +92,11 @@ public class EmployeeOrm {
         this.id = employeeOrmBuilder.id;
         this.firstName = employeeOrmBuilder.firstName;
         this.lastName = employeeOrmBuilder.lastName;
-        this.email = employeeOrmBuilder.email;
-        this.phone = employeeOrmBuilder.phone;
         this.hireDate = employeeOrmBuilder.hireDate;
-        this.jobId = employeeOrmBuilder.jobId;
-        this.salary = employeeOrmBuilder.salary;
-        this.commisionPct = employeeOrmBuilder.commisionPct;
-        this.managerId = employeeOrmBuilder.managerId;
-        this.department = employeeOrmBuilder.department;
+        this.leaveDate = employeeOrmBuilder.leaveDate;
+        this.departmentList = employeeOrmBuilder.departmentList;
+        this.birthDate = employeeOrmBuilder.birthDate;
+        this.gender = employeeOrmBuilder.gender;
     }
 
     /**
@@ -142,20 +121,6 @@ public class EmployeeOrm {
     }
 
     /**
-     * @return email
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * @return номер телефона
-     */
-    public String getPhone() {
-        return phone;
-    }
-
-    /**
      * @return дата наема
      */
     public Date getHireDate() {
@@ -163,38 +128,31 @@ public class EmployeeOrm {
     }
 
     /**
-     * @return идентификатор профессии
+     * @return дата увольнения
      */
-    public long getJobId() {
-        return jobId;
+    public Date getLeaveDate() {
+        return leaveDate;
     }
 
     /**
-     * @return зарплата
+     * @return список департаментаментов работника
      */
-    public BigInteger getSalary() {
-        return salary;
+    public List<DepartmentOrm> getDepartmentList() {
+        return departmentList;
     }
 
     /**
-     * @return налог
+     * @return дата рождения
      */
-    public Double getCommisionPct() {
-        return commisionPct;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
     /**
-     * @return идентификатор менеджера
+     * @return пол
      */
-    public long getManagerId() {
-        return managerId;
-    }
-
-    /**
-     * @return департамент
-     */
-    public DepartmentOrm getDepartment() {
-        return department;
+    public String getGender() {
+        return gender;
     }
 
     /**
@@ -206,6 +164,14 @@ public class EmployeeOrm {
          */
         private long id;
         /**
+         * Дата рождения
+         */
+        private Date birthDate;
+        /**
+         * Пол
+         */
+        private String gender;
+        /**
          * Имя работника
          */
         private String firstName;
@@ -214,37 +180,17 @@ public class EmployeeOrm {
          */
         private String lastName;
         /**
-         * Email
-         */
-        private String email;
-        /**
-         * Номер телефона
-         */
-        private String phone;
-        /**
          * Дата наема
          */
         private Date hireDate;
         /**
-         * Идентификатор профессии
+         * Дата увольнения
          */
-        private long jobId;
+        private Date leaveDate;
         /**
-         * Зарплата
+         * Список департаментаментов работника
          */
-        private BigInteger salary;
-        /**
-         * Налог
-         */
-        private Double commisionPct;
-        /**
-         * Идентификатор менеджера
-         */
-        private long managerId;
-        /**
-         * Департамент
-         */
-        private DepartmentOrm department;
+        private List<DepartmentOrm> departmentList;
 
         /**
          * @param id идентификатор сущности
@@ -274,24 +220,6 @@ public class EmployeeOrm {
         }
 
         /**
-         * @param email email
-         * @return билдер сущности
-         */
-        public EmployeeOrmBuilder setEmail(String email) {
-            this.email = email;
-            return this;
-        }
-
-        /**
-         * @param phone номер телефона
-         * @return билдер сущности
-         */
-        public EmployeeOrmBuilder setPhone(String phone) {
-            this.phone = phone;
-            return this;
-        }
-
-        /**
          * @param hireDate дата наема
          * @return билдер сущности
          */
@@ -301,53 +229,43 @@ public class EmployeeOrm {
         }
 
         /**
-         * @param jobId идентификатор профессии
+         * @param leaveDate дата увольнения
          * @return билдер сущности
          */
-        public EmployeeOrmBuilder setJobId(long jobId) {
-            this.jobId = jobId;
+        public EmployeeOrmBuilder setLeaveDate(Date leaveDate) {
+            this.leaveDate = leaveDate;
             return this;
         }
 
         /**
-         * @param salary зарплата
+         * @param departmentList список департаментаментов работника
          * @return билдер сущности
          */
-        public EmployeeOrmBuilder setSalary(BigInteger salary) {
-            this.salary = salary;
+        public EmployeeOrmBuilder setDepartmentList(List<DepartmentOrm> departmentList) {
+            this.departmentList = departmentList;
             return this;
         }
 
         /**
-         * @param commisionPct налог
+         * @param birthDate дата рождения
          * @return билдер сущности
          */
-        public EmployeeOrmBuilder setCommisionPct(Double commisionPct) {
-            this.commisionPct = commisionPct;
+        public EmployeeOrmBuilder setBirthDate(Date birthDate) {
+            this.birthDate = birthDate;
             return this;
         }
 
         /**
-         * @param managerId идентификатор менеджера
+         * @param gender пол
          * @return билдер сущности
          */
-        public EmployeeOrmBuilder setManagerId(long managerId) {
-            this.managerId = managerId;
-            return this;
-        }
-
-        /**
-         * @param department департамент
-         * @return билдер сущности
-         */
-        public EmployeeOrmBuilder setDepartment(DepartmentOrm department) {
-            this.department = department;
+        public EmployeeOrmBuilder setGender(String gender) {
+            this.gender = gender;
             return this;
         }
 
         /**
          * Метод построения сущности Работник
-         *
          * @return сущность работник
          */
         public EmployeeOrm build() {

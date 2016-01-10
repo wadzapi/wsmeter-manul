@@ -1,6 +1,6 @@
 package org.wadzapi.employeeService.persist.dao;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,12 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.wadzapi.employeeService.persist.orm.DepartmentOrm;
 import org.wadzapi.employeeService.persist.orm.EmployeeOrm;
 
-import java.math.BigInteger;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Юнит-тест методов класса {@link EmployeeJpaDao}
@@ -28,13 +30,10 @@ import static org.junit.Assert.*;
 @Transactional
 public class EmployeeJpaDaoTest {
 
-    /*
-        TODO Доработать тесты DAO
-     */
     /**
      * Эталонный список работников,загружаемый из тестовой БД
      */
-    private static List<EmployeeOrm> referenceEmployeeOrmList;
+    private static List<TestEqualsEmployeeOrmWrapper> referenceEmployeeOrmList;
     /**
      * Тестовый экземпляр DAO для работы с сущностью "Работник"
      */
@@ -44,34 +43,32 @@ public class EmployeeJpaDaoTest {
     @BeforeClass
     @SuppressWarnings("deprecation")
     public static void setUpClass() {
-        List<EmployeeOrm> initEmployeeOrmList = new ArrayList<>();
+        List<TestEqualsEmployeeOrmWrapper> initEmployeeOrmList = new ArrayList<>();
         EmployeeOrm.EmployeeOrmBuilder employeeOrmBuilder = new EmployeeOrm.EmployeeOrmBuilder();
         DepartmentOrm.DepartmentOrmBuilder departmentOrmBuilder = new DepartmentOrm.DepartmentOrmBuilder();
-        initEmployeeOrmList.add(employeeOrmBuilder.setId(0).setFirstName("Ирина Николаевна").setLastName("Василькова")
-                .setEmail("vasilkova@test").setPhone("+3(423)332-31-12").setHireDate(new Date(116, 0, 8)).setJobId(0)
-                .setSalary(BigInteger.ONE).setCommisionPct(0.23).setManagerId(0).setDepartment(departmentOrmBuilder.setId(290L)
-                        .setName("Sales").build()).build());
-        initEmployeeOrmList.add(employeeOrmBuilder.setId(1).setFirstName("Кирилл Петрович").setLastName("Шниперсон")
-                .setEmail("snippersonchik_a@test").setPhone("+3(423)332-31-12").setHireDate(new Date(116, 0, 8)).setJobId(0)
-                .setSalary(BigInteger.ONE).setCommisionPct(0.23).setManagerId(0).setDepartment(departmentOrmBuilder.setId(280L)
-                        .setName("IT").build()).build());
-        initEmployeeOrmList.add(employeeOrmBuilder.setId(2).setFirstName("Валентина").setLastName("Касикова")
-                .setEmail("kasilkiva@test").setPhone("+3(423)332-31-13").setHireDate(new Date(116, 0, 8)).setJobId(0)
-                .setSalary(BigInteger.ONE).setCommisionPct(0.23).setManagerId(0).setDepartment(departmentOrmBuilder.setId(280L)
-                        .setName("IT").build()).build());
-        initEmployeeOrmList.add(employeeOrmBuilder.setId(3).setFirstName("Оксана").setLastName("Продавшкина")
-                .setEmail("prodovashkina@test").setPhone("+3(423)332-33-33").setHireDate(new Date(116, 0, 8)).setJobId(0)
-                .setSalary(BigInteger.ONE).setCommisionPct(0.23).setManagerId(0).setDepartment(departmentOrmBuilder.setId(290L)
-                        .setName("Sales").build()).build());
-        initEmployeeOrmList.add(employeeOrmBuilder.setId(4).setFirstName("Максим").setLastName("Шубин")
-                .setEmail("shubin@test").setPhone("+3(423)332-44-44").setHireDate(new Date(116, 0, 8)).setJobId(0)
-                .setSalary(BigInteger.ONE).setCommisionPct(0.23).setManagerId(0).setDepartment(departmentOrmBuilder.setId(280L)
-                        .setName("IT").build()).build());
+        initEmployeeOrmList.add(new TestEqualsEmployeeOrmWrapper(employeeOrmBuilder.setId(10120).setFirstName("Armond").setLastName("Fairtlough")
+                .setGender("F").setBirthDate(new Date(60, 2, 26)).setHireDate(new Date(96, 6, 6)).setLeaveDate(null)
+                .setDepartmentList(Collections.singletonList(departmentOrmBuilder.setId("d290").setName("Sales").build())).build()));
+        initEmployeeOrmList.add(new TestEqualsEmployeeOrmWrapper(employeeOrmBuilder.setId(10123).setFirstName("Hinrich").setLastName("Randi")
+                .setGender("M").setBirthDate(new Date(62, 4, 12)).setHireDate(new Date(93, 0, 15)).setLeaveDate(null)
+                .setDepartmentList(Collections.singletonList(departmentOrmBuilder.setId("d280").setName("IT").build())).build()));
+        initEmployeeOrmList.add(new TestEqualsEmployeeOrmWrapper(employeeOrmBuilder.setId(10124).setFirstName("Geraldo").setLastName("Marwedel")
+                .setGender("M").setBirthDate(new Date(62, 4, 23)).setHireDate(new Date(91, 8, 2)).setLeaveDate(null)
+                .setDepartmentList(Collections.singletonList(departmentOrmBuilder.setId("d280").setName("IT").build())).build()));
+        initEmployeeOrmList.add(new TestEqualsEmployeeOrmWrapper(employeeOrmBuilder.setId(10130).setFirstName("Nishit").setLastName("Casperson")
+                .setGender("M").setBirthDate(new Date(55, 3, 27)).setHireDate(new Date(88, 5, 21)).setLeaveDate(null)
+                .setDepartmentList(Collections.singletonList(departmentOrmBuilder.setId("d290").setName("Sales").build())).build()));
+        initEmployeeOrmList.add(new TestEqualsEmployeeOrmWrapper(employeeOrmBuilder.setId(10133).setFirstName("Giri").setLastName("Isaak")
+                .setGender("M").setBirthDate(new Date(63, 11, 12)).setHireDate(new Date(85, 11, 15)).setLeaveDate(null)
+                .setDepartmentList(Collections.singletonList(departmentOrmBuilder.setId("d290").setName("Sales").build())).build()));
+        initEmployeeOrmList.add(new TestEqualsEmployeeOrmWrapper(employeeOrmBuilder.setId(10134).setFirstName("Diederik").setLastName("Siprelle")
+                .setGender("M").setBirthDate(new Date(53, 3, 15)).setHireDate(new Date(87, 11, 12)).setLeaveDate(null)
+                .setDepartmentList(Collections.singletonList(departmentOrmBuilder.setId("d290").setName("Sales").build())).build()));
         referenceEmployeeOrmList = initEmployeeOrmList;
     }
 
     /**
-     * Юнит-тест для метода {@link EmployeeJpaDao#findOne(long)}
+     * Юнит-тест для метода {@link EmployeeJpaDao#findOne(Object)}
      *
      * @throws Exception ошибка теста
      */
@@ -79,33 +76,35 @@ public class EmployeeJpaDaoTest {
     @SuppressWarnings("deprecation")
     public void testFindOne() throws Exception {
         //IT
-        EmployeeOrm employeeOrm = employeeJpaDao.findOne(1L);
+        EmployeeOrm employeeOrm = employeeJpaDao.findOne(10133L);
         assertNotNull(employeeOrm);
-        assertEquals("Кирилл Петрович", employeeOrm.getFirstName());
-        assertEquals("Шниперсон", employeeOrm.getLastName());
-        assertEquals("snippersonchik_a@test", employeeOrm.getEmail());
-        assertEquals("+3(423)332-31-12", employeeOrm.getPhone());
-        assertEquals(new Date(116, 0, 8), employeeOrm.getHireDate());
-        assertEquals(BigInteger.valueOf(1), employeeOrm.getSalary());
-        assertEquals(0, employeeOrm.getManagerId());
-        DepartmentOrm departmentOrm = employeeOrm.getDepartment();
+        assertEquals("Giri", employeeOrm.getFirstName());
+        assertEquals("Isaak", employeeOrm.getLastName());
+        assertEquals("M", employeeOrm.getGender());
+        assertEquals(new Date(63, 11, 12), employeeOrm.getBirthDate());
+        assertEquals(null, employeeOrm.getLeaveDate());
+        assertEquals(new Date(85, 11, 15), employeeOrm.getHireDate());
+        /*List<DepartmentOrm> departmentOrmList = (List<DepartmentOrm>) employeeOrm.getDepartmentList();
+        assertEquals(1, departmentOrmList.size());
+        DepartmentOrm departmentOrm = departmentOrmList.get(0);
         assertNotNull(departmentOrm);
         assertEquals(280, departmentOrm.getId());
-        assertEquals("IT", departmentOrm.getName());
+        assertEquals("IT", departmentOrm.getName());*/
         //Sales
-        employeeOrm = employeeJpaDao.findOne(0L);
+        employeeOrm = employeeJpaDao.findOne(10123L);
         assertNotNull(employeeOrm);
-        assertEquals("Ирина Николаевна", employeeOrm.getFirstName());
-        assertEquals("Василькова", employeeOrm.getLastName());
-        assertEquals("vasilkova@test", employeeOrm.getEmail());
-        assertEquals("+3(423)332-31-12", employeeOrm.getPhone());
-        assertEquals(new Date(116, 0, 8), employeeOrm.getHireDate());
-        assertEquals(BigInteger.valueOf(1), employeeOrm.getSalary());
-        assertEquals(0, employeeOrm.getManagerId());
-        departmentOrm = employeeOrm.getDepartment();
+        assertEquals("Hinrich", employeeOrm.getFirstName());
+        assertEquals("Randi", employeeOrm.getLastName());
+        assertEquals("M", employeeOrm.getGender());
+        assertEquals(new Date(93, 00, 15), employeeOrm.getHireDate());
+        assertEquals(null, employeeOrm.getLeaveDate());
+        assertEquals(new Date(62, 04, 12), employeeOrm.getBirthDate());
+        /*departmentOrmList = (List<DepartmentOrm>) employeeOrm.getDepartmentList();
+        assertEquals(1, departmentOrmList.size());
+        departmentOrm = departmentOrmList.get(0);
         assertNotNull(departmentOrm);
         assertEquals(290, departmentOrm.getId());
-        assertEquals("Sales", departmentOrm.getName());
+        assertEquals("Sales", departmentOrm.getName());*/
     }
 
     /**
@@ -117,7 +116,66 @@ public class EmployeeJpaDaoTest {
     public void testFindAll() throws Exception {
         List<EmployeeOrm> employeeOrmList = employeeJpaDao.findAll();
         assertNotNull(employeeOrmList);
-        assertEquals(5, employeeOrmList.size());
-        assertTrue(EqualsBuilder.reflectionEquals(referenceEmployeeOrmList, employeeOrmList));
+        assertEquals(6, employeeOrmList.size());
+        List<TestEqualsEmployeeOrmWrapper> equalsEmployeeOrmWrappers = new ArrayList<>(employeeOrmList.size());
+        for (EmployeeOrm employeeOrm : employeeOrmList) {
+            equalsEmployeeOrmWrappers.add(new TestEqualsEmployeeOrmWrapper(employeeOrm));
+        }
+        Assert.assertEquals(referenceEmployeeOrmList, equalsEmployeeOrmWrappers);
+        //Assert.assertThat(equalsEmployeeOrmWrappers, (Matcher) CoreMatchers.hasItems(referenceEmployeeOrmList));
+    }
+
+
+    /**
+     * Обертка для сущности для реализации сравнения по всем полям класса, т.к.
+     * assertTrue(EqualsBuilder.reflectionEquals(referenceEmployeeOrmList, employeeOrmList));
+     * дает true, даже если поля не эквивалентны
+     * TODO Подумать над реализацией кастомизированного Matcher'а Hamcrest или использовать EqualsBuilder
+     */
+    static class TestEqualsEmployeeOrmWrapper extends DepartmentOrm {
+
+        /**
+         * Обернутый экземпляр сущности Работник
+         */
+        private final EmployeeOrm employeeOrm;
+
+        /**
+         * Список тестовых департаментов
+         */
+        private List<DepartmentJpaDaoTest.TestEqualsDepartmentOrmWrapper> departmentOrmWrappers;
+
+        /**
+         * Конструктор класса
+         *
+         * @param employeeOrm обернутый экземпляр
+         */
+        TestEqualsEmployeeOrmWrapper(EmployeeOrm employeeOrm) {
+            this.employeeOrm = Objects.requireNonNull(employeeOrm);
+            List<DepartmentOrm> departmentOrmList = employeeOrm.getDepartmentList();
+            if (departmentOrmList != null) {
+                this.departmentOrmWrappers = new ArrayList<>(departmentOrmList.size());
+                for (DepartmentOrm departmentOrm : departmentOrmList) {
+                    this.departmentOrmWrappers.add(new DepartmentJpaDaoTest.TestEqualsDepartmentOrmWrapper(departmentOrm));
+                }
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            TestEqualsEmployeeOrmWrapper that = (TestEqualsEmployeeOrmWrapper) o;
+            return Objects.equals(employeeOrm.getId(), that.employeeOrm.getId()) &&
+                    Objects.equals(employeeOrm.getBirthDate(), that.employeeOrm.getBirthDate()) &&
+                    //Objects.equals(departmentOrmWrappers, that.departmentOrmWrappers) &&
+                    Objects.equals(employeeOrm.getFirstName(), that.employeeOrm.getFirstName()) &&
+                    Objects.equals(employeeOrm.getLastName(), that.employeeOrm.getLastName()) &&
+                    Objects.equals(employeeOrm.getGender(), that.employeeOrm.getGender()) &&
+                    Objects.equals(employeeOrm.getHireDate(), that.employeeOrm.getHireDate()) &&
+                    Objects.equals(employeeOrm.getLeaveDate(), that.employeeOrm.getLeaveDate());
+        }
     }
 }

@@ -8,6 +8,8 @@ import org.wadzapi.employeeService.model.Employee;
 import org.wadzapi.employeeService.persist.dao.Dao;
 import org.wadzapi.employeeService.persist.orm.EmployeeOrm;
 
+import java.util.Collections;
+
 /**
  * Провайдер информации о работнике со статическим набором полей
  */
@@ -33,9 +35,8 @@ public class StubbedEmployeeHandler implements EmployeeHandler {
         LOGGER.debug(logMsg, "Начало", employeeId);
         Employee emp = new Employee();
         emp.setEmployeeId(String.valueOf(employeeId));
-        emp.setDateOfJoining("01-02-2001");
-        emp.setDepartment("Sales");
-        emp.setEmail("test@example.com");
+        emp.setHireDate("01-02-2001");
+        emp.setDepartments(Collections.singletonList("Sales"));
         emp.setEmployeeId("675436");
         emp.setFirstName("John");
         emp.setLastName("Smith");

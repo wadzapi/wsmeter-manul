@@ -1,43 +1,56 @@
 package org.wadzapi.employeeService.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * Сущность предметной области "работник"
  * Используется также для передачи веб-сервисом
  */
 @XmlRootElement(name="employee")
-public class Employee 
-{
-	/**
-	 * Имя работника
-	 */
-	private String firstName;
-
-	/**
-	 * Фамилия работника
-	 */
-	private String lastName;
-
+public class Employee {
 	/**
 	 * Идентификатор работника
 	 */
 	private String employeeId;
-
 	/**
-	 * Email
+	 * Имя работника
 	 */
-	private String email;
-
+	private String firstName;
+	/**
+	 * Фамилия работника
+	 */
+	private String lastName;
+	/**
+	 * Дата рождения
+	 */
+	private String birthDate;
 	/**
 	 * Дата наема
 	 */
-	private String dateOfJoining;
-
+	private String hireDate;
+	/**
+	 * Дата увольнения
+	 */
+	private String leaveDate;
 	/**
 	 * Название департамента
 	 */
-	private String department;
+	private List<String> departments;
+
+	/**
+	 * @return идентификатор работника
+	 */
+	public String getEmployeeId() {
+		return employeeId;
+	}
+
+	/**
+	 * @param employeeId идентификатор работника
+	 */
+	public void setEmployeeId(String employeeId) {
+		this.employeeId = employeeId;
+	}
 
 	/**
 	 * @return имя работника
@@ -68,58 +81,58 @@ public class Employee
 	}
 
 	/**
-	 * @return идентификатор работника
+	 * @return дата рождения
 	 */
-	public String getEmployeeId() {
-		return employeeId;
+	public String getBirthDate() {
+		return birthDate;
 	}
 
 	/**
-	 * @param employeeId идентификатор работника
+	 * @param birthDate дата рождения
 	 */
-	public void setEmployeeId(String employeeId) {
-		this.employeeId = employeeId;
-	}
-
-	/**
-	 * @return email
-	 */
-	public String getEmail() {
-		return email;
-	}
-
-	/**
-	 * @param email email
-	 */
-	public void setEmail(String email) {
-		this.email = email;
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	/**
 	 * @return дата наема
 	 */
-	public String getDateOfJoining() {
-		return dateOfJoining;
+	public String getHireDate() {
+		return hireDate;
 	}
 
 	/**
-	 * @param dateOfJoining дата наема
+	 * @param hireDate дата наема
 	 */
-	public void setDateOfJoining(String dateOfJoining) {
-		this.dateOfJoining = dateOfJoining;
+	public void setHireDate(String hireDate) {
+		this.hireDate = hireDate;
+	}
+
+	/**
+	 * @return дата увольнения
+	 */
+	public String getLeaveDate() {
+		return leaveDate;
+	}
+
+	/**
+	 * @param leaveDate дата увольнения
+	 */
+	public void setLeaveDate(String leaveDate) {
+		this.leaveDate = leaveDate;
 	}
 
 	/**
 	 * @return название департамента
 	 */
-	public String getDepartment() {
-		return department;
+	public List<String> getDepartments() {
+		return departments;
 	}
 
 	/**
-	 * @param department название департамента
+	 * @param departments название департамента
 	 */
-	public void setDepartment(String department) {
-		this.department = department;
+	public void setDepartments(List<String> departments) {
+		this.departments = departments;
 	}		
 }

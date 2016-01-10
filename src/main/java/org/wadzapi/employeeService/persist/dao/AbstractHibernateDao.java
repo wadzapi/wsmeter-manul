@@ -59,7 +59,7 @@ public abstract class AbstractHibernateDao<T> implements Dao<T> {
      * {@inheritDoc}
      */
     @Override
-    public T findOne(long id) {
+    public T findOne(Object id) {
         return entityManager.find( persistedClazz, id);
     }
 

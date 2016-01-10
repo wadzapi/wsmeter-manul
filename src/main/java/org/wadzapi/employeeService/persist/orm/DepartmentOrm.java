@@ -1,6 +1,7 @@
 package org.wadzapi.employeeService.persist.orm;
 
 import javax.persistence.*;
+import java.util.List;
 
 /*
     TODO Подумать над сокращение бойлерплейтного кода
@@ -21,15 +22,23 @@ public class DepartmentOrm {
     @Id
     @GeneratedValue
     @Access(AccessType.FIELD)
-    @Column(name = "department_id", unique = true, nullable = false)
-    private long id;
+    @Column(name = "DEPT_NO", unique = true, nullable = false)
+    private String id;
 
     /**
      * Название департамента
      */
     @Access(AccessType.FIELD)
-    @Column(name = "department_name")
+    @Column(name = "DEPT_NAME")
     private String name;
+
+    /**
+     * Список работников департамента
+     */
+    //TODO Допилить маппинги manyToMany и добавить в тесты
+    @Transient
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "departmentList")
+    private List<EmployeeOrm> employeeList;
 
     /**
      * Конструктор класса
@@ -45,12 +54,13 @@ public class DepartmentOrm {
     private DepartmentOrm(DepartmentOrmBuilder departmentOrmBuilder) {
         this.id = departmentOrmBuilder.id;
         this.name = departmentOrmBuilder.name;
+        this.employeeList = departmentOrmBuilder.employeeList;
     }
 
     /**
      * @return идентификатор сущности
      */
-    public long getId() {
+    public String getId() {
         return id;
     }
 
@@ -62,23 +72,34 @@ public class DepartmentOrm {
     }
 
     /**
+     * @return список работников департамента
+     */
+    public List<EmployeeOrm> getEmployeeList() {
+        return employeeList;
+    }
+
+    /**
      * Класс-билдер сущности Департамент
      */
     public static final class DepartmentOrmBuilder {
         /**
          * Id сущности департамент
          */
-        private long id;
+        private String id;
         /**
          * Название департамента
          */
         private String name;
+        /**
+         * Список работников департамента
+         */
+        private List<EmployeeOrm> employeeList;
 
         /**
          * @param id идентификатор сущности
          * @return билдер сущности Департамент
          */
-        public DepartmentOrmBuilder setId(long id) {
+        public DepartmentOrmBuilder setId(String id) {
             this.id = id;
             return this;
         }
@@ -93,8 +114,14 @@ public class DepartmentOrm {
         }
 
         /**
+         * @param employeeList список работников департамента
+         */
+        public void setEmployeeList(List<EmployeeOrm> employeeList) {
+            this.employeeList = employeeList;
+        }
+
+        /**
          * Метод построения сущности Департамент
-         *
          * @return сущность департамент
          */
         public DepartmentOrm build() {

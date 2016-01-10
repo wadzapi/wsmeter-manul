@@ -13,7 +13,10 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 /**
  * Конвертер сущности "Работник"
@@ -48,11 +51,12 @@ public class EmployeeConverter {
         LOGGER.debug(logMsg, "Начало");
         Employee employee = new Employee();
         employee.setEmployeeId(String.valueOf(employeeOrm.getId()));
-        employee.setDateOfJoining(DATE_TIME_FORMATTER.format(employeeOrm.getHireDate().toInstant()));
-        employee.setDepartment(employeeOrm.getDepartment().getName());
-        employee.setEmail(employeeOrm.getEmail());
         employee.setFirstName(employeeOrm.getFirstName());
         employee.setLastName(employeeOrm.getLastName());
+        employee.setBirthDate(DATE_TIME_FORMATTER.format(employeeOrm.getBirthDate().toInstant()));
+        employee.setHireDate(DATE_TIME_FORMATTER.format(employeeOrm.getHireDate().toInstant()));
+        employee.setLeaveDate(DATE_TIME_FORMATTER.format(employeeOrm.getLeaveDate().toInstant()));
+        employee.setDepartments(employeeOrm.getDepartmentList().stream().map(employeeOrmItem -> employeeOrmItem.getName()).collect(Collectors.toList()));
         LOGGER.debug(logMsg, "Конец");
         return employee;
     }
@@ -66,14 +70,18 @@ public class EmployeeConverter {
     public EmployeeOrm convertToOrm(Employee employee) {
         final String logMsg = "{} конвертации из сущности \"Работник\" в orm";
         LOGGER.debug(logMsg, "Начало");
-        LocalDateTime localDateTime = LocalDateTime.parse(employee.getDateOfJoining(), DATE_TIME_FORMATTER);
         EmployeeOrm.EmployeeOrmBuilder employeeOrmBuilder = new EmployeeOrm.EmployeeOrmBuilder();
         DepartmentOrm.DepartmentOrmBuilder departmentOrmBuilder = new DepartmentOrm.DepartmentOrmBuilder();
-        departmentOrmBuilder.setName(employee.getDepartment());
+        List<String> departmentNameList = employee.getDepartments();
+        List<DepartmentOrm> departmentOrmList = new ArrayList<>(departmentNameList.size());
+        for (String deparmentName : departmentNameList) {
+            departmentOrmList.add(departmentOrmBuilder.setName(deparmentName).build());
+        }
         employeeOrmBuilder.setId(Long.valueOf(employee.getEmployeeId()))
-                .setHireDate(Date.from(localDateTime.toInstant(ZoneOffset.UTC)))
-                .setDepartment(departmentOrmBuilder.build())
-                .setEmail(employee.getEmail())
+                .setBirthDate(Date.from(LocalDateTime.parse(employee.getBirthDate(), DATE_TIME_FORMATTER).toInstant(ZoneOffset.UTC)))
+                .setHireDate(Date.from(LocalDateTime.parse(employee.getHireDate(), DATE_TIME_FORMATTER).toInstant(ZoneOffset.UTC)))
+                .setLeaveDate(Date.from(LocalDateTime.parse(employee.getLeaveDate(), DATE_TIME_FORMATTER).toInstant(ZoneOffset.UTC)))
+                .setDepartmentList(departmentOrmList)
                 .setFirstName(employee.getFirstName())
                 .setLastName(employee.getLastName());
         LOGGER.debug(logMsg, "Конец");
