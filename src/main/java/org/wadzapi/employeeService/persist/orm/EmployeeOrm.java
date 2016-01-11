@@ -15,15 +15,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "EMPLOYEES")
-public class EmployeeOrm {
-
-    /**
-     * Идентификатор сущности
-     */
-    @Id
-    @Access(AccessType.FIELD)
-    @Column(name = "EMP_NO")
-    private long id;
+@AttributeOverride(name = "id", column = @Column(name = "EMP_NO", unique = true, nullable = false))
+public class EmployeeOrm extends AbstactOrm {
 
     /**
      * Дата рождения
@@ -89,7 +82,7 @@ public class EmployeeOrm {
      * @param employeeOrmBuilder билдер сущности Работник
      */
     private EmployeeOrm(EmployeeOrmBuilder employeeOrmBuilder) {
-        this.id = employeeOrmBuilder.id;
+        super(employeeOrmBuilder.id);
         this.firstName = employeeOrmBuilder.firstName;
         this.lastName = employeeOrmBuilder.lastName;
         this.hireDate = employeeOrmBuilder.hireDate;
@@ -97,13 +90,6 @@ public class EmployeeOrm {
         this.departmentList = employeeOrmBuilder.departmentList;
         this.birthDate = employeeOrmBuilder.birthDate;
         this.gender = employeeOrmBuilder.gender;
-    }
-
-    /**
-     * @return идентификатор сущности
-     */
-    public long getId() {
-        return id;
     }
 
     /**

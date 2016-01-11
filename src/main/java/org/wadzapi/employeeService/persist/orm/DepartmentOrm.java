@@ -14,16 +14,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "DEPARTMENTS")
-public class DepartmentOrm {
-
-    /**
-     * Id сущности департамент
-     */
-    @Id
-    @GeneratedValue
-    @Access(AccessType.FIELD)
-    @Column(name = "DEPT_NO", unique = true, nullable = false)
-    private String id;
+@AttributeOverride(name = "id", column = @Column(name = "DEPT_NO", unique = true, nullable = false))
+public class DepartmentOrm extends AbstactOrm {
 
     /**
      * Название департамента
@@ -52,16 +44,9 @@ public class DepartmentOrm {
      * @param departmentOrmBuilder билдер сущности Департамент
      */
     private DepartmentOrm(DepartmentOrmBuilder departmentOrmBuilder) {
-        this.id = departmentOrmBuilder.id;
+        super(departmentOrmBuilder.id);
         this.name = departmentOrmBuilder.name;
         this.employeeList = departmentOrmBuilder.employeeList;
-    }
-
-    /**
-     * @return идентификатор сущности
-     */
-    public String getId() {
-        return id;
     }
 
     /**
@@ -85,7 +70,7 @@ public class DepartmentOrm {
         /**
          * Id сущности департамент
          */
-        private String id;
+        private long id;
         /**
          * Название департамента
          */
@@ -99,7 +84,7 @@ public class DepartmentOrm {
          * @param id идентификатор сущности
          * @return билдер сущности Департамент
          */
-        public DepartmentOrmBuilder setId(String id) {
+        public DepartmentOrmBuilder setId(long id) {
             this.id = id;
             return this;
         }

@@ -43,8 +43,8 @@ public class DepartmentJpaDaoTest {
     public static void setUpClass() {
         List<TestEqualsDepartmentOrmWrapper> initDepartmentOrmList = new ArrayList<>();
         DepartmentOrm.DepartmentOrmBuilder departmentOrmBuilder = new DepartmentOrm.DepartmentOrmBuilder();
-        initDepartmentOrmList.add(new TestEqualsDepartmentOrmWrapper(departmentOrmBuilder.setId("d003").setName("Human Resources").build()));
-        initDepartmentOrmList.add(new TestEqualsDepartmentOrmWrapper(departmentOrmBuilder.setId("d004").setName("Production").build()));
+        initDepartmentOrmList.add(new TestEqualsDepartmentOrmWrapper(departmentOrmBuilder.setId(4L).setName("Production").build()));
+        initDepartmentOrmList.add(new TestEqualsDepartmentOrmWrapper(departmentOrmBuilder.setId(3L).setName("Human Resources").build()));
         referenceDepartmentOrmList = initDepartmentOrmList;
     }
 
@@ -56,14 +56,14 @@ public class DepartmentJpaDaoTest {
     @Test
     public void testFindOne() throws Exception {
         //IT
-        DepartmentOrm departmentOrm = departmentJpaDao.findOne("d004");
+        DepartmentOrm departmentOrm = departmentJpaDao.findOne(4L);
         assertNotNull(departmentOrm);
-        assertEquals("d004", departmentOrm.getId());
+        assertEquals(4L, departmentOrm.getId());
         assertEquals("Production", departmentOrm.getName());
         //Sales
-        departmentOrm = departmentJpaDao.findOne("d003");
+        departmentOrm = departmentJpaDao.findOne(3L);
         assertNotNull(departmentOrm);
-        assertEquals("d003", departmentOrm.getId());
+        assertEquals(3L, departmentOrm.getId());
         assertEquals("Human Resources", departmentOrm.getName());
     }
 

@@ -48,22 +48,22 @@ public class EmployeeJpaDaoTest {
         DepartmentOrm.DepartmentOrmBuilder departmentOrmBuilder = new DepartmentOrm.DepartmentOrmBuilder();
         initEmployeeOrmList.add(new TestEqualsEmployeeOrmWrapper(employeeOrmBuilder.setId(10120).setFirstName("Armond").setLastName("Fairtlough")
                 .setGender("F").setBirthDate(new Date(60, 2, 26)).setHireDate(new Date(96, 6, 6)).setLeaveDate(null)
-                .setDepartmentList(Collections.singletonList(departmentOrmBuilder.setId("d290").setName("Sales").build())).build()));
+                .setDepartmentList(Collections.singletonList(departmentOrmBuilder.setId(290L).setName("Sales").build())).build()));
         initEmployeeOrmList.add(new TestEqualsEmployeeOrmWrapper(employeeOrmBuilder.setId(10123).setFirstName("Hinrich").setLastName("Randi")
                 .setGender("M").setBirthDate(new Date(62, 4, 12)).setHireDate(new Date(93, 0, 15)).setLeaveDate(null)
-                .setDepartmentList(Collections.singletonList(departmentOrmBuilder.setId("d280").setName("IT").build())).build()));
+                .setDepartmentList(Collections.singletonList(departmentOrmBuilder.setId(280L).setName("IT").build())).build()));
         initEmployeeOrmList.add(new TestEqualsEmployeeOrmWrapper(employeeOrmBuilder.setId(10124).setFirstName("Geraldo").setLastName("Marwedel")
                 .setGender("M").setBirthDate(new Date(62, 4, 23)).setHireDate(new Date(91, 8, 2)).setLeaveDate(null)
-                .setDepartmentList(Collections.singletonList(departmentOrmBuilder.setId("d280").setName("IT").build())).build()));
+                .setDepartmentList(Collections.singletonList(departmentOrmBuilder.setId(280L).setName("IT").build())).build()));
         initEmployeeOrmList.add(new TestEqualsEmployeeOrmWrapper(employeeOrmBuilder.setId(10130).setFirstName("Nishit").setLastName("Casperson")
                 .setGender("M").setBirthDate(new Date(55, 3, 27)).setHireDate(new Date(88, 5, 21)).setLeaveDate(null)
-                .setDepartmentList(Collections.singletonList(departmentOrmBuilder.setId("d290").setName("Sales").build())).build()));
+                .setDepartmentList(Collections.singletonList(departmentOrmBuilder.setId(290L).setName("Sales").build())).build()));
         initEmployeeOrmList.add(new TestEqualsEmployeeOrmWrapper(employeeOrmBuilder.setId(10133).setFirstName("Giri").setLastName("Isaak")
                 .setGender("M").setBirthDate(new Date(63, 11, 12)).setHireDate(new Date(85, 11, 15)).setLeaveDate(null)
-                .setDepartmentList(Collections.singletonList(departmentOrmBuilder.setId("d290").setName("Sales").build())).build()));
+                .setDepartmentList(Collections.singletonList(departmentOrmBuilder.setId(290L).setName("Sales").build())).build()));
         initEmployeeOrmList.add(new TestEqualsEmployeeOrmWrapper(employeeOrmBuilder.setId(10134).setFirstName("Diederik").setLastName("Siprelle")
                 .setGender("M").setBirthDate(new Date(53, 3, 15)).setHireDate(new Date(87, 11, 12)).setLeaveDate(null)
-                .setDepartmentList(Collections.singletonList(departmentOrmBuilder.setId("d290").setName("Sales").build())).build()));
+                .setDepartmentList(Collections.singletonList(departmentOrmBuilder.setId(290L).setName("Sales").build())).build()));
         referenceEmployeeOrmList = initEmployeeOrmList;
     }
 
@@ -96,9 +96,9 @@ public class EmployeeJpaDaoTest {
         assertEquals("Hinrich", employeeOrm.getFirstName());
         assertEquals("Randi", employeeOrm.getLastName());
         assertEquals("M", employeeOrm.getGender());
-        assertEquals(new Date(93, 00, 15), employeeOrm.getHireDate());
+        assertEquals(new Date(93, 0, 15), employeeOrm.getHireDate());
         assertEquals(null, employeeOrm.getLeaveDate());
-        assertEquals(new Date(62, 04, 12), employeeOrm.getBirthDate());
+        assertEquals(new Date(62, 4, 12), employeeOrm.getBirthDate());
         /*departmentOrmList = (List<DepartmentOrm>) employeeOrm.getDepartmentList();
         assertEquals(1, departmentOrmList.size());
         departmentOrm = departmentOrmList.get(0);
