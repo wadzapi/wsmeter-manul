@@ -35,6 +35,22 @@
             </resource>
         </resources>
         <plugins>
+            <!--Плагин очистки рабочих директорий -->
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>tmp</directory>
+                            <includes>
+                                <include>**/*.bk</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
             <!-- Компиляция исходников -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -64,6 +80,7 @@
                     <defaultSchemaName>public</defaultSchemaName>
                     <verbose>true</verbose>
                 </configuration>
+                <!-- TODO Разобраться с workflow liquibase и привязать нужные к maven-->
                 <executions>
                     <!-- Удаление девелоперской БД перед разворачивание из changelog'а -->
                     <execution>
@@ -73,7 +90,6 @@
                             <goal>dropAll</goal>
                         </goals>
                         <configuration>
-                            <!-- TODO Разобраться с workflow liquibase и привязать нужные к maven-->
                             <skip>true</skip>
                         </configuration>
                     </execution>
@@ -85,8 +101,7 @@
                             <goal>update</goal>
                         </goals>
                         <configuration>
-                            <!-- TODO Разобраться с workflow liquibase и привязать нужные к maven-->
-                            <skip>true</skip>
+                            <clearCheckSums>true</clearCheckSums>
                         </configuration>
                     </execution>
                     <!-- Проставление признака обновления
@@ -99,7 +114,6 @@
                             <goal>changelogSync</goal>
                         </goals>
                         <configuration>
-                            <!-- TODO Разобраться с workflow liquibase и привязать нужные к maven-->
                             <skip>true</skip>
                         </configuration>
                     </execution>
