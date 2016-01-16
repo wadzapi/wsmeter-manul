@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="vadik (generated)" id="1452909000688-1">
+        <createSequence sequenceName="hibernate_sequence"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-2">
+        <createTable tableName="departments">
+            <column name="dept_no" type="CHAR(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dept_name" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-3">
+        <createTable tableName="dept_emp">
+            <column name="emp_no" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dept_no" type="CHAR(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="from_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="to_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-4">
+        <createTable tableName="dept_manager">
+            <column name="dept_no" type="CHAR(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="emp_no" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="from_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="to_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-5">
+        <createTable tableName="employees">
+            <column name="emp_no" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birth_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(14)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="GENDER2ENUM(2147483647)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hire_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="leave_date" type="date"/>
+            <column name="tit_no" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-6">
+        <createTable tableName="salaries_hire_year">
+            <column name="emp_no" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="salary" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="from_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="to_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hire_year" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-7">
+        <createTable tableName="salaries_hire_year_eighties">
+            <column name="emp_no" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="salary" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="from_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="to_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hire_year" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-8">
+        <createTable tableName="salaries_hire_year_nineties_early">
+            <column name="emp_no" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="salary" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="from_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="to_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hire_year" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-9">
+        <createTable tableName="salaries_hire_year_other">
+            <column name="emp_no" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="salary" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="from_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="to_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hire_year" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-10">
+        <createTable tableName="title_ref">
+            <column name="tit_no" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-11">
+        <createTable tableName="titles_history">
+            <column name="emp_no" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tit_no" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="from_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="to_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-12">
+        <addPrimaryKey columnNames="dept_no" constraintName="cs_departments_pkey" tableName="departments"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-13">
+        <addPrimaryKey columnNames="emp_no, dept_no" constraintName="cs_dept_emp_pkey" tableName="dept_emp"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-14">
+        <addPrimaryKey columnNames="emp_no, dept_no" constraintName="cs_dept_manager_pkey" tableName="dept_manager"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-15">
+        <addPrimaryKey columnNames="emp_no" constraintName="cs_employees_pkey" tableName="employees"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-16">
+        <addPrimaryKey columnNames="emp_no, from_date" constraintName="cs_salaries_hire_year_eighties_pkey"
+                       tableName="salaries_hire_year_eighties"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-17">
+        <addPrimaryKey columnNames="emp_no, from_date" constraintName="cs_salaries_hire_year_nineties_early_pkey"
+                       tableName="salaries_hire_year_nineties_early"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-18">
+        <addPrimaryKey columnNames="emp_no, from_date" constraintName="cs_salaries_hire_year_other_pkey"
+                       tableName="salaries_hire_year_other"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-19">
+        <addPrimaryKey columnNames="tit_no" constraintName="cs_title_ref_pkey" tableName="title_ref"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-20">
+        <addPrimaryKey columnNames="emp_no, tit_no, from_date" constraintName="cs_titles_history_pkey"
+                       tableName="titles_history"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-21">
+        <addUniqueConstraint columnNames="dept_name" constraintName="cs_departments_dept_name_key"
+                             tableName="departments"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-22">
+        <createIndex indexName="cs_employees_leave_date_idx" tableName="employees">
+            <column name="leave_date"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-23">
+        <createIndex indexName="cs_employees_tit_no_idx" tableName="employees">
+            <column name="tit_no"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-24">
+        <createIndex indexName="dept_emp_dept_no_idx" tableName="dept_emp">
+            <column name="dept_no"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-25">
+        <createIndex indexName="dept_emp_emp_no_from_date_key" tableName="titles_history" unique="true">
+            <column name="emp_no"/>
+            <column name="from_date"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-26">
+        <createIndex indexName="dept_emp_emp_no_idx" tableName="dept_emp">
+            <column name="emp_no"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-27">
+        <createIndex indexName="dept_emp_from_date_idx" tableName="dept_emp">
+            <column name="from_date"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-28">
+        <createIndex indexName="dept_manager_dept_no_idx" tableName="dept_manager">
+            <column name="dept_no"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-29">
+        <createIndex indexName="dept_manager_emp_no_idx" tableName="dept_manager">
+            <column name="emp_no"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-30">
+        <createIndex indexName="salaries_hire_year_eighties_emp_no_idx" tableName="salaries_hire_year_eighties">
+            <column name="emp_no"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-31">
+        <createIndex indexName="salaries_hire_year_eighties_hire_year_idx" tableName="salaries_hire_year_eighties">
+            <column name="hire_year"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-32">
+        <createIndex indexName="salaries_hire_year_nineties_early_emp_no_idx"
+                     tableName="salaries_hire_year_nineties_early">
+            <column name="emp_no"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-33">
+        <createIndex indexName="salaries_hire_year_nineties_early_hire_year_idx"
+                     tableName="salaries_hire_year_nineties_early">
+            <column name="hire_year"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-34">
+        <createIndex indexName="salaries_hire_year_other_emp_no_idx" tableName="salaries_hire_year_other">
+            <column name="emp_no"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-35">
+        <createIndex indexName="salaries_hire_year_other_hire_year_idx" tableName="salaries_hire_year_other">
+            <column name="hire_year"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-36">
+        <createIndex indexName="title_ref_title_idx" tableName="title_ref" unique="true">
+            <column name="title"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-37">
+        <createIndex indexName="titles_history_emp_no_idx" tableName="titles_history">
+            <column name="emp_no"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-38">
+        <createIndex indexName="titles_history_tit_no_idx" tableName="titles_history">
+            <column name="tit_no"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-39">
+        <addForeignKeyConstraint baseColumnNames="emp_no" baseTableName="dept_emp"
+                                 constraintName="cs_dept_emp_emp_no_fkey1" deferrable="false" initiallyDeferred="false"
+                                 onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="emp_no"
+                                 referencedTableName="employees"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-40">
+        <addForeignKeyConstraint baseColumnNames="emp_no" baseTableName="dept_manager"
+                                 constraintName="cs_dept_manager_emp_no_fkey1" deferrable="false"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION"
+                                 referencedColumnNames="emp_no" referencedTableName="employees"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-41">
+        <addForeignKeyConstraint baseColumnNames="emp_no" baseTableName="salaries_hire_year_eighties"
+                                 constraintName="cs_salaries_hire_year_eighties_emp_no_fkey1" deferrable="false"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION"
+                                 referencedColumnNames="emp_no" referencedTableName="employees"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-42">
+        <addForeignKeyConstraint baseColumnNames="emp_no" baseTableName="salaries_hire_year_nineties_early"
+                                 constraintName="cs_salaries_hire_year_nineties_early_emp_no_fkey1" deferrable="false"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION"
+                                 referencedColumnNames="emp_no" referencedTableName="employees"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-43">
+        <addForeignKeyConstraint baseColumnNames="emp_no" baseTableName="salaries_hire_year_other"
+                                 constraintName="cs_salaries_hire_year_other_emp_no_fkey1" deferrable="false"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION"
+                                 referencedColumnNames="emp_no" referencedTableName="employees"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-44">
+        <addForeignKeyConstraint baseColumnNames="emp_no" baseTableName="titles_history"
+                                 constraintName="cs_titles_history_emp_no_fkey1" deferrable="false"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION"
+                                 referencedColumnNames="emp_no" referencedTableName="employees"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-45">
+        <addForeignKeyConstraint baseColumnNames="tit_no" baseTableName="titles_history"
+                                 constraintName="cs_titles_history_tit_no_fkey1" deferrable="false"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION"
+                                 referencedColumnNames="tit_no" referencedTableName="title_ref"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-46">
+        <addForeignKeyConstraint baseColumnNames="dept_no" baseTableName="dept_emp" constraintName="distfk"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="dept_no" referencedTableName="departments"/>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-47">
+        <createView fullDefinition="false" viewName="dept_emp_max">SELECT de.emp_no,
+            de.dept_no,
+            de.from_date,
+            de.to_date
+            FROM dept_emp de,
+            ( SELECT dept_emp.emp_no,
+            max(dept_emp.from_date) AS from_date_max
+            FROM dept_emp
+            GROUP BY dept_emp.emp_no) dm
+            WHERE ((de.emp_no = dm.emp_no) AND (de.from_date = dm.from_date_max))
+            ORDER BY de.emp_no;
+        </createView>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-48">
+        <createView fullDefinition="false" viewName="dept_emp_year_month">SELECT de.emp_no,
+            de.dept_no,
+            de.from_date,
+            date_part('year'::text, de.from_date) AS from_date_year,
+            date_part('month'::text, de.from_date) AS from_date_month,
+            de.to_date,
+            date_part('year'::text, de.to_date) AS to_date_year,
+            date_part('month'::text, de.to_date) AS to_date_month,
+            e.hire_date,
+            e.leave_date,
+            date_part('year'::text, e.leave_date) AS leave_date_year
+            FROM dept_emp de,
+            employees e
+            WHERE (de.emp_no = e.emp_no)
+            ORDER BY de.from_date;
+        </createView>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-49">
+        <createView fullDefinition="false" viewName="dept_emp_year_month_max">SELECT dey.emp_no,
+            dey.dept_no,
+            dey.from_date,
+            dey.from_date_year,
+            dey.from_date_month,
+            dey.to_date,
+            dey.to_date_year,
+            dey.to_date_month,
+            dey.hire_date,
+            dey.leave_date,
+            dey.leave_date_year
+            FROM dept_emp_year_month dey,
+            ( SELECT dept_emp.emp_no,
+            max(dept_emp.from_date) AS from_date_max
+            FROM dept_emp
+            GROUP BY dept_emp.emp_no) dm
+            WHERE ((dey.emp_no = dm.emp_no) AND (dey.from_date = dm.from_date_max));
+        </createView>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-50">
+        <createView fullDefinition="false" viewName="employees_active">SELECT employees.emp_no,
+            employees.birth_date,
+            employees.first_name,
+            employees.last_name,
+            employees.gender,
+            employees.hire_date,
+            employees.leave_date,
+            employees.tit_no
+            FROM employees
+            WHERE (employees.leave_date IS NULL);
+        </createView>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-51">
+        <createView fullDefinition="false" viewName="employees_active_max_non_default2">SELECT e.emp_no,
+            e.leave_date,
+            max(de.to_date) AS dept_emp_to_date_max,
+            max(thist.to_date) AS titles_history_to_date_max
+            FROM dept_emp de,
+            employees e,
+            titles_history thist
+            WHERE (((((de.emp_no = e.emp_no) AND (e.emp_no = thist.emp_no)) AND (de.to_date &lt; '9998-01-01'::date))
+            AND (thist.to_date &lt; '9998-01-01'::date)) AND (e.leave_date IS NULL))
+            GROUP BY e.emp_no, e.leave_date;
+        </createView>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-52">
+        <createView fullDefinition="false" viewName="employees_active_without_department">SELECT e.emp_no,
+            e.leave_date,
+            de.to_date AS dept_emp_to_date,
+            thist.from_date AS titles_history_from_date,
+            thist.to_date AS titles_history_to_date
+            FROM dept_emp de,
+            employees e,
+            titles_history thist
+            WHERE ((((de.emp_no = e.emp_no) AND (e.emp_no = thist.emp_no)) AND (de.to_date &lt; '9998-01-01'::date)) AND
+            (e.leave_date IS NULL))
+            ORDER BY e.emp_no, thist.from_date;
+        </createView>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-53">
+        <createView fullDefinition="false" viewName="employees_leaver">SELECT employees.emp_no,
+            employees.birth_date,
+            employees.first_name,
+            employees.last_name,
+            employees.gender,
+            employees.hire_date,
+            employees.leave_date,
+            employees.tit_no
+            FROM employees
+            WHERE (employees.leave_date IS NOT NULL);
+        </createView>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-54">
+        <createView fullDefinition="false" viewName="salaries">SELECT salaries_hire_year.emp_no,
+            salaries_hire_year.salary,
+            salaries_hire_year.from_date,
+            salaries_hire_year.to_date
+            FROM salaries_hire_year
+            ORDER BY salaries_hire_year.emp_no, salaries_hire_year.from_date, salaries_hire_year.to_date;
+        </createView>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-55">
+        <createView fullDefinition="false" viewName="titles">SELECT thist.emp_no,
+            tref.title,
+            thist.from_date,
+            thist.to_date
+            FROM titles_history thist,
+            title_ref tref
+            WHERE (thist.tit_no = tref.tit_no);
+        </createView>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-56">
+        <createView fullDefinition="false" viewName="titles_history_max">SELECT th.emp_no,
+            th.tit_no,
+            th.from_date,
+            th.to_date
+            FROM titles_history th,
+            ( SELECT titles_history.emp_no,
+            max(titles_history.from_date) AS from_date_max
+            FROM titles_history
+            GROUP BY titles_history.emp_no) tm
+            WHERE ((th.emp_no = tm.emp_no) AND (th.from_date = tm.from_date_max));
+        </createView>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-57">
+        <createView fullDefinition="false" viewName="titles_history_max_dept_emp_compared">SELECT e.emp_no,
+            e.last_name,
+            tm.from_date AS title_from_date,
+            tm.to_date AS title_to_date,
+            dm.from_date AS dept_emp_from_date,
+            dm.to_date AS dept_emp_to_date,
+            CASE
+            WHEN (tm.from_date &lt; dm.from_date) THEN (-1)
+            WHEN (tm.from_date &gt; dm.from_date) THEN 1
+            ELSE 0
+            END AS compared_val_from,
+            CASE
+            WHEN (tm.to_date &lt; dm.to_date) THEN (-1)
+            WHEN (tm.to_date &gt; dm.to_date) THEN 1
+            ELSE 0
+            END AS compared_val_to
+            FROM employees e,
+            titles_history_year_month_max tm,
+            dept_emp_year_month_max dm
+            WHERE (((e.emp_no = tm.emp_no) AND (e.emp_no = dm.emp_no)) AND (tm.emp_no = dm.emp_no))
+            ORDER BY
+            CASE
+            WHEN (tm.from_date &lt; dm.from_date) THEN (-1)
+            WHEN (tm.from_date &gt; dm.from_date) THEN 1
+            ELSE 0
+            END,
+            CASE
+            WHEN (tm.to_date &lt; dm.to_date) THEN (-1)
+            WHEN (tm.to_date &gt; dm.to_date) THEN 1
+            ELSE 0
+            END, e.emp_no;
+        </createView>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-58">
+        <createView fullDefinition="false" viewName="titles_history_year_month">SELECT thist.emp_no,
+            thist.tit_no,
+            tref.title,
+            thist.from_date,
+            date_part('year'::text, thist.from_date) AS from_date_year,
+            date_part('month'::text, thist.from_date) AS from_date_month,
+            thist.to_date,
+            date_part('year'::text, thist.to_date) AS to_date_year,
+            date_part('month'::text, thist.to_date) AS to_date_month,
+            e.hire_date,
+            e.leave_date,
+            date_part('year'::text, e.leave_date) AS leave_date_year
+            FROM titles_history thist,
+            employees e,
+            title_ref tref
+            WHERE ((thist.emp_no = e.emp_no) AND (thist.tit_no = tref.tit_no))
+            ORDER BY thist.from_date;
+        </createView>
+    </changeSet>
+    <changeSet author="vadik (generated)" id="1452909000688-59">
+        <createView fullDefinition="false" viewName="titles_history_year_month_max">SELECT ty.emp_no,
+            ty.tit_no,
+            ty.title,
+            ty.from_date,
+            ty.from_date_year,
+            ty.from_date_month,
+            ty.to_date,
+            ty.to_date_year,
+            ty.to_date_month,
+            ty.hire_date,
+            ty.leave_date,
+            ty.leave_date_year
+            FROM titles_history_year_month ty,
+            ( SELECT titles_history.emp_no,
+            max(titles_history.from_date) AS from_date_max
+            FROM titles_history
+            GROUP BY titles_history.emp_no) tm
+            WHERE ((ty.emp_no = tm.emp_no) AND (ty.from_date = tm.from_date_max));
+        </createView>
+    </changeSet>
+</databaseChangeLog>

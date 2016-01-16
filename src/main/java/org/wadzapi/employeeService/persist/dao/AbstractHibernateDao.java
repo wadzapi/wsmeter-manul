@@ -19,15 +19,10 @@ public abstract class AbstractHibernateDao<T> implements Dao<T> {
      */
     private final Class<T> persistedClazz;
 
-    protected EntityManager entityManager;
-
     /**
-     * Менеджерр для работы с сущностями
+     * Менеджер для работы с сущностями БД
      */
-    @PersistenceContext(name = "PersistenceUnit")
-    public void setEntityManagerFactory(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+    protected EntityManager entityManager;
 
     /**
      * Конструктор класса
@@ -96,4 +91,15 @@ public abstract class AbstractHibernateDao<T> implements Dao<T> {
         T entity = findOne(entityId);
         delete( entity );
     }
+
+    /**
+     * Метод инъектирования менеджера сущностей
+     *
+     * @param entityManager менеджер для работы с сущностями БД
+     */
+    @PersistenceContext(name = "PersistenceUnit")
+    public void setEntityManagerFactory(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
 }

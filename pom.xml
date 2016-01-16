@@ -3,12 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>org.wadzapi</groupId>
     <artifactId>wsmeter-manul</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>${packaging.type}</packaging>
+    <name>wsmeter-manul</name>
+    <url>https://github.com/wadzapi/wsmeter-manul</url>
     <properties>
+        <!-- Кодировки -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- Зависимости -->
         <jee.version>7.0</jee.version>
         <h2.version>1.4.190</h2.version>
         <hibernate.version>4.3.8.Final</hibernate.version>
@@ -17,8 +22,18 @@
         <cxf.version>3.1.4</cxf.version>
         <slf4j.version>1.7.13</slf4j.version>
         <spring.version>4.1.2.RELEASE</spring.version>
+        <liquibase.plugin.version>3.4.2</liquibase.plugin.version>
+        <!-- TODO Удалить тестовые проперти -->
+        <liquibase.test.property01>strangeValue</liquibase.test.property01>
+        <logDir>./logs</logDir>
     </properties>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <!-- Компиляция исходников -->
             <plugin>
@@ -29,6 +44,66 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <!-- Liquibase -->
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase.plugin.version}</version>
+                <configuration>
+                    <propertyFile>src/main/resources/liquibase/liquibase.properties</propertyFile>
+                    <changeLogFile>
+                        src/main/resources/org/wadzapi/employeeService/persist/dao/changelog/wrightEmployees.changelog.xml
+                    </changeLogFile>
+                    <driver>org.postgresql.Driver</driver>
+                    <url>jdbc:postgresql://localhost:5432/wrightemployees</url>
+                    <username>restadmin01</username>
+                    <password>123456</password>
+                    <logging>debug</logging>
+                    <includeTestOutputDirectory>false</includeTestOutputDirectory>
+                    <defaultSchemaName>public</defaultSchemaName>
+                    <verbose>true</verbose>
+                </configuration>
+                <executions>
+                    <!-- Удаление девелоперской БД перед разворачивание из changelog'а -->
+                    <execution>
+                        <id>drop-dev-db</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>dropAll</goal>
+                        </goals>
+                        <configuration>
+                            <!-- TODO Разобраться с workflow liquibase и привязать нужные к maven-->
+                            <skip>true</skip>
+                        </configuration>
+                    </execution>
+                    <!-- Обновление changelog'ов и БД -->
+                    <execution>
+                        <id>update-db-resources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                        <configuration>
+                            <!-- TODO Разобраться с workflow liquibase и привязать нужные к maven-->
+                            <skip>true</skip>
+                        </configuration>
+                    </execution>
+                    <!-- Проставление признака обновления
+                        Необходимо для тестов и при ручном накатывании обновления БД
+                         или после генерации changelog'ов -->
+                    <execution>
+                        <id>offlineSyncLog</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>changelogSync</goal>
+                        </goals>
+                        <configuration>
+                            <!-- TODO Разобраться с workflow liquibase и привязать нужные к maven-->
+                            <skip>true</skip>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -44,7 +119,6 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.4.1207.jre7</version>
-            <scope>runtime</scope>
         </dependency>
         <!-- Hibernate -->
         <dependency>
@@ -112,6 +186,7 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.struts</groupId>
@@ -166,7 +241,6 @@
                     <plugin>
                         <artifactId>maven-assembly-plugin</artifactId>
                         <version>2.6</version>
-
                         <configuration>
                             <archive>
                                 <manifest>
@@ -185,6 +259,21 @@
                                 <goals>
                                     <goal>single</goal>
                                 </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- Копирование библиотек зависимостей -->
+                    <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>copy-dependencies</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>

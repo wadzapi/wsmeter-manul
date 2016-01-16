@@ -1,7 +1,7 @@
 target/
 .idea/
 **/*.trace.db
-*.iml
+**/*.iml
 dumps/
 README.html
 scripts/
