@@ -6,3 +6,5 @@ dumps/
 README.html
 scripts/
 **/*.lock.db
+tmp/
+logs/
