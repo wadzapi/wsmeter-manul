@@ -22,6 +22,7 @@ public abstract class AbstractHibernateDao<T> implements Dao<T> {
     /**
      * Менеджер для работы с сущностями БД
      */
+    @PersistenceContext
     protected EntityManager entityManager;
 
     /**

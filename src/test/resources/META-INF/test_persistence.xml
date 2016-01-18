@@ -10,7 +10,7 @@
         <class>org.wadzapi.employeeService.persist.orm.EmployeeOrm</class>
         <properties>
             <property name="connection.driver_class" value="org.h2.Driver"/>
-            <property name="hibernate.connection.url" value="jdbc:h2:file:./data/employees;DB_CLOSE_ON_EXIT=FALSE;MV_STORE=FALSE;MVCC=FALSE;IFEXISTS=TRUE;ACCESS_MODE_DATA=r"/>
+            <property name="hibernate.connection.url" value="jdbc:h2:file:./data/employees;DB_CLOSE_ON_EXIT=FALSE;MV_STORE=FALSE;MVCC=FALSE;IFEXISTS=TRUE;ACCESS_MODE_DATA=rw"/>
             <property name="javax.persistence.jdbc.user" value="sa"/>
             <property name="javax.persistence.jdbc.password" value=""/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>

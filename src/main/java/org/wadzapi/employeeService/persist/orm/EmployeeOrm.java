@@ -14,7 +14,7 @@ import java.util.List;
  * Сущность "Работник"
  */
 @Entity
-@Table(name = "EMPLOYEES")
+@Table(name = "employees")
 @AttributeOverride(name = "id", column = @Column(name = "EMP_NO", unique = true, nullable = false))
 public class EmployeeOrm extends AbstactOrm {
 
@@ -22,50 +22,50 @@ public class EmployeeOrm extends AbstactOrm {
      * Дата рождения
      */
     @Access(AccessType.FIELD)
-    @Column(name = "BIRTH_DATE")
+    @Column(name = "birth_date")
     private Date birthDate;
 
     /**
      * Имя работника
      */
     @Access(AccessType.FIELD)
-    @Column(name = "FIRST_NAME")
+    @Column(name = "first_name")
     private String firstName;
 
     /**
      * Фамилия работника
      */
     @Access(AccessType.FIELD)
-    @Column(name = "LAST_NAME")
+    @Column(name = "last_name")
     private String lastName;
 
     /**
      * Пол
      */
     @Access(AccessType.FIELD)
-    @Column(name = "GENDER")
+    @Column(name = "gender")
     private String gender;
 
     /**
      * Дата наема
      */
     @Access(AccessType.FIELD)
-    @Column(name = "HIRE_DATE")
+    @Column(name = "hire_date")
     private Date hireDate;
 
     /**
      * Дата увольнения
      */
     @Access(AccessType.FIELD)
-    @Column(name = "LEAVE_DATE")
+    @Column(name = "leave_date")
     private Date leaveDate;
 
     /**
      * Список департаментаментов работника
      */
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "DEPT_EMP",
-            joinColumns = {@JoinColumn(name = "DEPT_NO", referencedColumnName = "EMP_NO")})
+    @JoinTable(name = "dept_emp",
+            joinColumns = {@JoinColumn(name = "dept_no", referencedColumnName = "emp_no")})
     @Access(AccessType.FIELD)
     //TODO Допилить маппинги manyToMany и добавить в тесты
     @Transient

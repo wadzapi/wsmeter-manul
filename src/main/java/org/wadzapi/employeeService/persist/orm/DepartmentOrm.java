@@ -13,15 +13,15 @@ import java.util.List;
  * Сущность "Департамент"
  */
 @Entity
-@Table(name = "DEPARTMENTS")
-@AttributeOverride(name = "id", column = @Column(name = "DEPT_NO", unique = true, nullable = false))
+@Table(name = "departments")
+@AttributeOverride(name = "id", column = @Column(name = "dept_no", unique = true, nullable = false))
 public class DepartmentOrm extends AbstactOrm {
 
     /**
      * Название департамента
      */
     @Access(AccessType.FIELD)
-    @Column(name = "DEPT_NAME")
+    @Column(name = "dept_name")
     private String name;
 
     /**

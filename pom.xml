@@ -13,16 +13,19 @@
         <!-- Кодировки -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.source.version>1.8</java.source.version>
+        <java.target.version>1.8</java.target.version>
         <!-- Зависимости -->
         <jee.version>7.0</jee.version>
         <h2.version>1.4.190</h2.version>
-        <hibernate.version>4.3.8.Final</hibernate.version>
+        <hibernate.version>5.0.7.Final</hibernate.version>
         <compiler.version>3.3</compiler.version>
         <jar.version>2.6</jar.version>
         <cxf.version>3.1.4</cxf.version>
         <slf4j.version>1.7.13</slf4j.version>
         <spring.version>4.1.2.RELEASE</spring.version>
         <liquibase.plugin.version>3.4.2</liquibase.plugin.version>
+        <javasyst.version>3.20.0-GA</javasyst.version>
         <!-- TODO Удалить тестовые проперти -->
         <liquibase.test.property01>strangeValue</liquibase.test.property01>
         <logDir>./logs</logDir>
@@ -57,8 +60,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${compiler.version}</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${java.source.version}</source>
+                    <target>${java.target.version}</target>
                 </configuration>
             </plugin>
             <!-- Liquibase -->
@@ -78,21 +81,9 @@
                     <logging>debug</logging>
                     <includeTestOutputDirectory>false</includeTestOutputDirectory>
                     <defaultSchemaName>public</defaultSchemaName>
-                    <verbose>true</verbose>
+                    <verbose>false</verbose>
                 </configuration>
-                <!-- TODO Разобраться с workflow liquibase и привязать нужные к maven-->
                 <executions>
-                    <!-- Удаление девелоперской БД перед разворачивание из changelog'а -->
-                    <execution>
-                        <id>drop-dev-db</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>dropAll</goal>
-                        </goals>
-                        <configuration>
-                            <skip>true</skip>
-                        </configuration>
-                    </execution>
                     <!-- Обновление changelog'ов и БД -->
                     <execution>
                         <id>update-db-resources</id>
@@ -100,9 +91,7 @@
                         <goals>
                             <goal>update</goal>
                         </goals>
-                        <configuration>
-                            <clearCheckSums>true</clearCheckSums>
-                        </configuration>
+                        <configuration/>
                     </execution>
                     <!-- Проставление признака обновления
                         Необходимо для тестов и при ручном накатывании обновления БД
@@ -113,9 +102,7 @@
                         <goals>
                             <goal>changelogSync</goal>
                         </goals>
-                        <configuration>
-                            <skip>true</skip>
-                        </configuration>
+                        <configuration/>
                     </execution>
                 </executions>
             </plugin>
@@ -133,14 +120,31 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.4.1207.jre7</version>
+            <scope>runtime</scope>
         </dependency>
         <!-- Hibernate -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>org.javassist</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>${javasyst.version}</version>
+        </dependency>
+        <!-- c3p0 -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-c3p0</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
         <!-- Apache CXF Dependencies -->
         <dependency>
             <groupId>org.apache.cxf</groupId>
@@ -206,6 +210,12 @@
             <groupId>org.apache.struts</groupId>
             <artifactId>struts2-core</artifactId>
             <version>2.5-BETA2</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>javassist</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
