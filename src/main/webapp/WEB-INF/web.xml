@@ -1,31 +1,98 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xmlns="http://java.sun.com/xml/ns/javaee"
-		 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-		 version="3.0">
-  <display-name>restService01</display-name>
-  <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
-  <context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/beans.xml</param-value>
-	</context-param>
-	<servlet>
-		<servlet-name>CXFServlet</servlet-name>
-		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>CXFServlet</servlet-name>
-		<url-pattern>/rest/*</url-pattern>
-	</servlet-mapping>
+<?xml version="1.0" encoding="UTF-8" ?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
 
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+    <icon>
+        <small-icon>icons/favicon/</small-icon>
+        <large-icon></large-icon>
+    </icon>
 
-	<error-page>
-		<error-code>500</error-code>
-		<location>/errors/servererror.jsp</location>
-	</error-page>
+    <display-name>WsMeterManul</display-name>
+
+    <desctiption>Проект изучения возможностей REST сервисов со Spring-контейнером и замером производительности для
+        различных реализаций JPA
+    </desctiption>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/beans.xml</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <servlet>
+        <display-name>CXF-WS-servlet</display-name>
+        <servlet-name>CXFServlet</servlet-name>
+        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CXFServlet</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <session-timeout>60</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+        </cookie-config>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/errors/servererror.jsp</location>
+    </error-page>
+
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <!-- TODO CLIENT-CERT см. https://docs.oracle.com/cd/E24329_01/web.1211/e24485/thin_client.htm#SCPRG166 -->
+    </login-config>
+
+    <security-constraint>
+        <web-resource-collection></web-resource-collection>
+        <auth-constraint></auth-constraint>
+        <user-data-constraint></user-data-constraint>
+    </security-constraint>
+
+    <web-resource-collection>
+        <web-resource-name>ws-client-pages</
+        <web-resource-name>
+        <description>Страницы доступа к ресурсам REST Web-сервиса работников</description>
+        <url-pattern>/rest/employeeservices/*</url-pattern>
+        <url-pattern>/rest/employeeservices/*</url-pattern>
+        <http-method>GET</http-method>
+    </web-resource-collection>
+
+    <web-resource-collection>
+        <web-resource-name>all-users-pages</
+        <web-resource-name>
+        <description>Страницы доступа к ресурсам REST Web-сервиса работников</description>
+        <url-pattern>/login.jsp</url-pattern>
+        <url-pattern>/errors/servererror.jsp</url-pattern>
+        <url-pattern>/index.jsp</url-pattern>
+        <http-method>GET</http-method>
+    </web-resource-collection>
+
+
+    <!--ejb-ref>
+        <ejb-ref-name>ejb/fooremote</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <remote>test.FooRemoteIF</remote>
+    </ejb-ref-->
+
+    <!--ejb-local-ref>
+        <ejb-ref-name>ejb/foo</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>test.FooIF</local>
+        <ejb-link>FooBean</ejb-link>
+    </ejb-local-ref-->
+
+
 </web-app>

@@ -4,12 +4,6 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-/*
-    TODO Подумать над сокращение бойлерплейтного кода
-     - использовать рефлексию?
-     - возможно ли поля сущности сделать final с Access(AccessType.FIELD)?
-     - необходим ли для JPA констуктор без аргументов?
- */
 /**
  * Сущность "Работник"
  */

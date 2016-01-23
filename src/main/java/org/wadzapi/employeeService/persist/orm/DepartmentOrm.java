@@ -3,12 +3,6 @@ package org.wadzapi.employeeService.persist.orm;
 import javax.persistence.*;
 import java.util.List;
 
-/*
-    TODO Подумать над сокращение бойлерплейтного кода
-     - использовать рефлексию?
-     - возможно ли поля сущности сделать final с Access(AccessType.FIELD)?
-     - необходим ли для JPA констуктор без аргументов?
- */
 /**
  * Сущность "Департамент"
  */

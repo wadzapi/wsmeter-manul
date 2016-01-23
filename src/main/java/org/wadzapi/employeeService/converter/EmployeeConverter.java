@@ -3,9 +3,9 @@ package org.wadzapi.employeeService.converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.wadzapi.employeeService.model.Employee;
 import org.wadzapi.employeeService.persist.orm.DepartmentOrm;
 import org.wadzapi.employeeService.persist.orm.EmployeeOrm;
+import org.wadzapi.employeeService.service.model.Employee;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
