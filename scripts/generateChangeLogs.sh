@@ -4,7 +4,7 @@ DRIVER_LIB="target/lib/postgresql-9.4.1207.jre7.jar"
 DB_JDBC_URL="jdbc:postgresql://localhost:5432/wrightemployees"
 DB_USR="restadmin01"
 DB_PWD="123456"
-CHANGE_LOG_NAME="wrightEmployees.changelog.xml"
+CHANGE_LOG_NAME="wrightEmployees-changelog-02.xml"
 CHANGE_LOG_PATH="src/main/resources/org/wadzapi/employeeService/persist/dao/changelog/${CHANGE_LOG_NAME}"
 BK_POSTFIX=".bk"
 

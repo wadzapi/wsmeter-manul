@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd
+http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee"
          version="3.0">
 
     <icon>
-        <small-icon>icons/favicon/</small-icon>
-        <large-icon></large-icon>
+        <small-icon>icons/favicon/manul16x16.jpg</small-icon>
+        <large-icon>icons/favicon/manul32x32.jpg</large-icon>
     </icon>
 
     <display-name>WsMeterManul</display-name>
 
-    <desctiption>Проект изучения возможностей REST сервисов со Spring-контейнером и замером производительности для
+    <description>Проект изучения возможностей REST сервисов со Spring-контейнером и замером производительности для
         различных реализаций JPA
-    </desctiption>
+    </description>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -27,6 +28,11 @@
         <display-name>CXF-WS-servlet</display-name>
         <servlet-name>CXFServlet</servlet-name>
         <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+        <security-role-ref>
+            <description>Пользователь ws-сервиса</description>
+            <role-name>ws-user</role-name>
+            <role-link>ws-user</role-link>
+        </security-role-ref>
     </servlet>
 
     <servlet-mapping>
@@ -56,31 +62,54 @@
     </login-config>
 
     <security-constraint>
-        <web-resource-collection></web-resource-collection>
-        <auth-constraint></auth-constraint>
-        <user-data-constraint></user-data-constraint>
+        <display-name>WS-Client</display-name>
+        <web-resource-collection>
+            <web-resource-name>ws-client-pages</web-resource-name>
+            <description>Страницы доступа к ресурсам REST Web-сервиса работников</description>
+            <url-pattern>/rest/employeeservices/*</url-pattern>
+            <url-pattern>/rest/employeeservices/*</url-pattern>
+            <http-method>GET</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Ограничение доступа для пользователей ws-сервиса</description>
+            <role-name>ws-user</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description>ws-client-pages-transport</description>
+            <transport-guarantee>INTEGRAL</transport-guarantee>
+        </user-data-constraint>
     </security-constraint>
 
-    <web-resource-collection>
-        <web-resource-name>ws-client-pages</
-        <web-resource-name>
-        <description>Страницы доступа к ресурсам REST Web-сервиса работников</description>
-        <url-pattern>/rest/employeeservices/*</url-pattern>
-        <url-pattern>/rest/employeeservices/*</url-pattern>
-        <http-method>GET</http-method>
-    </web-resource-collection>
+    <security-constraint>
+        <display-name>All-Users</display-name>
+        <web-resource-collection>
+            <web-resource-name>WsMeterManul-users-pages</web-resource-name>
+            <description>Страницы доступа к ресурсам REST Web-сервиса работников</description>
+            <url-pattern>/login.jsp</url-pattern>
+            <url-pattern>/errors/servererror.jsp</url-pattern>
+            <url-pattern>/index.jsp</url-pattern>
+            <http-method>GET</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Ограничение для пользователей веб-приложения WsMeterManul</description>
+            <role-name>WsMeterManul-user</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description>WsMeterManul-users-pages-transport</description>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
 
-    <web-resource-collection>
-        <web-resource-name>all-users-pages</
-        <web-resource-name>
-        <description>Страницы доступа к ресурсам REST Web-сервиса работников</description>
-        <url-pattern>/login.jsp</url-pattern>
-        <url-pattern>/errors/servererror.jsp</url-pattern>
-        <url-pattern>/index.jsp</url-pattern>
-        <http-method>GET</http-method>
-    </web-resource-collection>
+    <security-role>
+        <description>Роль пользователей веб-сервиса employees</description>
+        <role-name>ws-user</role-name>
+    </security-role>
+    <security-role>
+        <description>Пользователь веб-приложения WsMeterManul</description>
+        <role-name>WsMeterManul-user</role-name>
+    </security-role>
 
-
+    <!-- TODO Разобраться с настройками аутентификации и ejb -->
     <!--ejb-ref>
         <ejb-ref-name>ejb/fooremote</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
@@ -93,6 +122,5 @@
         <local>test.FooIF</local>
         <ejb-link>FooBean</ejb-link>
     </ejb-local-ref-->
-
 
 </web-app>
