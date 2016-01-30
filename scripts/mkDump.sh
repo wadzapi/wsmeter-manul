@@ -1,7 +1,7 @@
 #!/bin/bash
-DB_NAME="employees1"
-DUMP_DIR="/home/workspace/projects/restService01/dumps"
-DUMP_PREFIX="employees1"
+DB_NAME="wrightemployees"
+DUMP_DIR="/home/workspace/projects/wsmeter-manul/bk/dumps"
+DUMP_PREFIX="wrightemployees"
 TIMESTAPMPER=$(date -d "today" +"%d.%m.%Y_%H:%M")
 DUMP_SUFFIX="sql"
 OUTPUT="${DUMP_DIR}/${DUMP_PREFIX}_${TIMESTAPMPER}.${DUMP_SUFFIX}"

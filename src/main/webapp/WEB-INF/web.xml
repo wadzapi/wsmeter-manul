@@ -1,31 +1,126 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xmlns="http://java.sun.com/xml/ns/javaee"
-		 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-		 version="3.0">
-  <display-name>restService01</display-name>
-  <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
-  <context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/beans.xml</param-value>
-	</context-param>
-	<servlet>
-		<servlet-name>CXFServlet</servlet-name>
-		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>CXFServlet</servlet-name>
-		<url-pattern>/rest/*</url-pattern>
-	</servlet-mapping>
+<?xml version="1.0" encoding="UTF-8" ?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd
+http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee"
+         version="3.0">
 
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+    <icon>
+        <small-icon>icons/favicon/manul16x16.jpg</small-icon>
+        <large-icon>icons/favicon/manul32x32.jpg</large-icon>
+    </icon>
 
-	<error-page>
-		<error-code>500</error-code>
-		<location>/errors/servererror.jsp</location>
-	</error-page>
+    <display-name>WsMeterManul</display-name>
+
+    <description>Проект изучения возможностей REST сервисов со Spring-контейнером и замером производительности для
+        различных реализаций JPA
+    </description>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/beans.xml</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <servlet>
+        <display-name>CXF-WS-servlet</display-name>
+        <servlet-name>CXFServlet</servlet-name>
+        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+        <security-role-ref>
+            <description>Пользователь ws-сервиса</description>
+            <role-name>ws-user</role-name>
+            <role-link>ws-user</role-link>
+        </security-role-ref>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CXFServlet</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <session-timeout>60</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+        </cookie-config>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/errors/servererror.jsp</location>
+    </error-page>
+
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <!-- TODO CLIENT-CERT см. https://docs.oracle.com/cd/E24329_01/web.1211/e24485/thin_client.htm#SCPRG166 -->
+    </login-config>
+
+    <security-constraint>
+        <display-name>WS-Client</display-name>
+        <web-resource-collection>
+            <web-resource-name>ws-client-pages</web-resource-name>
+            <description>Страницы доступа к ресурсам REST Web-сервиса работников</description>
+            <url-pattern>/rest/employeeservices/*</url-pattern>
+            <url-pattern>/rest/employeeservices/*</url-pattern>
+            <http-method>GET</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Ограничение доступа для пользователей ws-сервиса</description>
+            <role-name>ws-user</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description>ws-client-pages-transport</description>
+            <transport-guarantee>INTEGRAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <display-name>All-Users</display-name>
+        <web-resource-collection>
+            <web-resource-name>WsMeterManul-users-pages</web-resource-name>
+            <description>Страницы доступа к ресурсам REST Web-сервиса работников</description>
+            <url-pattern>/login.jsp</url-pattern>
+            <url-pattern>/errors/servererror.jsp</url-pattern>
+            <url-pattern>/index.jsp</url-pattern>
+            <http-method>GET</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Ограничение для пользователей веб-приложения WsMeterManul</description>
+            <role-name>WsMeterManul-user</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description>WsMeterManul-users-pages-transport</description>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <security-role>
+        <description>Роль пользователей веб-сервиса employees</description>
+        <role-name>ws-user</role-name>
+    </security-role>
+    <security-role>
+        <description>Пользователь веб-приложения WsMeterManul</description>
+        <role-name>WsMeterManul-user</role-name>
+    </security-role>
+
+    <!-- TODO Разобраться с настройками аутентификации и ejb -->
+    <!--ejb-ref>
+        <ejb-ref-name>ejb/fooremote</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <remote>test.FooRemoteIF</remote>
+    </ejb-ref-->
+
+    <!--ejb-local-ref>
+        <ejb-ref-name>ejb/foo</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>test.FooIF</local>
+        <ejb-link>FooBean</ejb-link>
+    </ejb-local-ref-->
+
 </web-app>

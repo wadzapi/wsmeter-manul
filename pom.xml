@@ -28,7 +28,7 @@
         <javasyst.version>3.20.0-GA</javasyst.version>
         <!-- TODO Удалить тестовые проперти -->
         <liquibase.test.property01>strangeValue</liquibase.test.property01>
-        <logDir>./logs</logDir>
+        <logDir>logs</logDir>
     </properties>
     <build>
         <resources>
@@ -48,6 +48,13 @@
                             <directory>tmp</directory>
                             <includes>
                                 <include>**/*.bk</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                        <fileset>
+                            <directory>.</directory>
+                            <includes>
+                                <include>README.html</include>
                             </includes>
                             <followSymlinks>false</followSymlinks>
                         </fileset>
@@ -291,7 +298,7 @@
                         <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
                             <execution>
-                                <phase>install</phase>
+                                <phase>package</phase>
                                 <goals>
                                     <goal>copy-dependencies</goal>
                                 </goals>

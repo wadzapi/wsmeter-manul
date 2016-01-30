@@ -2,8 +2,9 @@ target/
 .idea/
 **/*.trace.db
 **/*.iml
-**/dumps
 README.html
 **/*.lock.db
 tmp/
-logs/
+bk/
+**/*.swp
+scripts/dumps

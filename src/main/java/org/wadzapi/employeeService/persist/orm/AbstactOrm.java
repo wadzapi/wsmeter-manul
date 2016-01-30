@@ -3,7 +3,7 @@ package org.wadzapi.employeeService.persist.orm;
 import javax.persistence.*;
 
 /**
- *
+ * Абстрактный ORM-класс для работы с сущностями
  */
 @MappedSuperclass
 public class AbstactOrm {

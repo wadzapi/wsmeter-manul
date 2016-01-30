@@ -4,18 +4,12 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-/*
-    TODO Подумать над сокращение бойлерплейтного кода
-     - использовать рефлексию?
-     - возможно ли поля сущности сделать final с Access(AccessType.FIELD)?
-     - необходим ли для JPA констуктор без аргументов?
- */
 /**
  * Сущность "Работник"
  */
 @Entity
 @Table(name = "employees")
-@AttributeOverride(name = "id", column = @Column(name = "EMP_NO", unique = true, nullable = false))
+@AttributeOverride(name = "id", column = @Column(name = "emp_no", unique = true, nullable = false))
 public class EmployeeOrm extends AbstactOrm {
 
     /**
