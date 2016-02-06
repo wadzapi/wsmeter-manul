@@ -21,6 +21,9 @@ http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee"
     </context-param>
 
     <listener>
+        <listener-class>org.wadzapi.employeeService.EmployeeServiceCtxListener</listener-class>
+    </listener>
+    <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
