@@ -4,10 +4,22 @@ import org.apache.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.management.NotCompliantMBeanException;
+import javax.management.StandardMBean;
+
 /**
  * Реализаця интерфейса удаленного конфигурирования уровня логирования
  */
-public class SimpleLoggerRemoteManager implements LoggerRemoteManager {
+public class SimpleLoggerRemoteManager extends StandardMBean implements LoggerRemoteManager {
+
+    /**
+     * Конструктор класса
+     *
+     * @throws NotCompliantMBeanException ошибка регистрации бина
+     */
+    public SimpleLoggerRemoteManager() throws NotCompliantMBeanException {
+        super(LoggerRemoteManager.class);
+    }
 
     /**
      * {@inheritDoc}

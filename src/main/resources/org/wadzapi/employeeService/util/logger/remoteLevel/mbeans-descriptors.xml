@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mbean name="LoggerRemoteManager"
+       className="org.wadzapi.employeeService.util.logger.remoteLevel.SimpleLoggerRemoteManager"
+       description="Компонент удаленного управления уровнем логирования сервиса wsMeterManul"
+       domain="RemoteLoggingUtils" group="LoggerRemoteManager"
+       type="org.wadzapi.employeeService.util.logger.remoteLevel.LoggerRemoteManager">
+    <operation name="setLevel" returnType="void" impact="ACTION">
+        <parameter name="loggerName" description="Идентификатор логгера" type="java.lang.String"/>
+        <parameter name="loggerLevel" description="Требуемый уровень логирования" type="java.lang.String"/>
+    </operation>
+</mbean>

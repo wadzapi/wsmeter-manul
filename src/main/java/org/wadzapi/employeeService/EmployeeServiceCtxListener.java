@@ -44,8 +44,7 @@ public class EmployeeServiceCtxListener implements ServletContextListener {
      */
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        //TODO Переход на декларативную регистрацию (через mbeans-descriptor.xml)
-        System.out.println("contextInitialized");
+        //TODO Переход на декларативную регистрацию (через mbeans-descriptors.xml)
         String loggerPath = "WEB-INF/classes/log4j2.xml";
         sce.getServletContext().setInitParameter(Log4jWebSupport.LOG4J_CONFIG_LOCATION, loggerPath);
         log4jServletContextListener.contextInitialized(sce);
@@ -57,8 +56,6 @@ public class EmployeeServiceCtxListener implements ServletContextListener {
      */
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        //TODO Убрать после проверки работоспособности обработчика уровней логирования
-        System.out.println("contextDestroyed");
         log4jServletContextListener.contextDestroyed(sce);
         unregisterRemoteLogManager();
     }
@@ -86,7 +83,7 @@ public class EmployeeServiceCtxListener implements ServletContextListener {
             ObjectName loggerRemoteManagerObjectName = new ObjectName(LOGGER_REMOTE_MANAGER_OBJECT_NAME);
             mBeanServer.unregisterMBean(loggerRemoteManagerObjectName);
         } catch (MalformedObjectNameException | InstanceNotFoundException | MBeanRegistrationException e) {
-            LOGGER.error("Ошибка отвязки обработчика удаленной настройки уровня логирования");
+            LOGGER.error("Ошибка отвязки обработчика удаленной настройки уровня логирования", e);
         }
     }
 }
