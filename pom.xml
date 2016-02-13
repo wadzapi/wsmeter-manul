@@ -30,29 +30,6 @@
     </properties>
     <build>
         <plugins>
-            <!--Плагин очистки рабочих директорий -->
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.1.1</version>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>tmp</directory>
-                            <includes>
-                                <include>**/*.bk</include>
-                            </includes>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
-                        <fileset>
-                            <directory>.</directory>
-                            <includes>
-                                <include>README.html</include>
-                            </includes>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
             <!-- Компиляция исходников -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -62,48 +39,6 @@
                     <source>${java.source.version}</source>
                     <target>${java.target.version}</target>
                 </configuration>
-            </plugin>
-            <!-- Liquibase -->
-            <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <version>${liquibase.plugin.version}</version>
-                <configuration>
-                    <propertyFile>src/main/resources/liquibase/liquibase.properties</propertyFile>
-                    <changeLogFile>
-                        src/main/resources/org/wadzapi/employeeService/persist/dao/changelog/wrightEmployees.changelog.xml
-                    </changeLogFile>
-                    <driver>org.postgresql.Driver</driver>
-                    <url>jdbc:postgresql://localhost:5432/wrightemployees</url>
-                    <username>restadmin01</username>
-                    <password>123456</password>
-                    <logging>debug</logging>
-                    <includeTestOutputDirectory>false</includeTestOutputDirectory>
-                    <defaultSchemaName>public</defaultSchemaName>
-                    <verbose>false</verbose>
-                </configuration>
-                <executions>
-                    <!-- Обновление changelog'ов и БД -->
-                    <execution>
-                        <id>update-db-resources</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>update</goal>
-                        </goals>
-                        <configuration/>
-                    </execution>
-                    <!-- Проставление признака обновления
-                        Необходимо для тестов и при ручном накатывании обновления БД
-                         или после генерации changelog'ов -->
-                    <execution>
-                        <id>offlineSyncLog</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>changelogSync</goal>
-                        </goals>
-                        <configuration/>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
@@ -172,7 +107,6 @@
             <artifactId>jackson-jaxrs</artifactId>
             <version>1.9.13</version>
         </dependency>
-
         <!-- Spring Dependencies -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -283,6 +217,72 @@
             </properties>
             <build>
                 <plugins>
+                    <!--Плагин очистки рабочих директорий после создания резеврных копий
+                     или компиляции README в html -->
+                    <plugin>
+                        <artifactId>maven-clean-plugin</artifactId>
+                        <version>2.1.1</version>
+                        <configuration>
+                            <filesets>
+                                <fileset>
+                                    <directory>tmp</directory>
+                                    <includes>
+                                        <include>**/*.bk</include>
+                                    </includes>
+                                    <followSymlinks>false</followSymlinks>
+                                </fileset>
+                                <fileset>
+                                    <directory>.</directory>
+                                    <includes>
+                                        <include>README.html</include>
+                                    </includes>
+                                    <followSymlinks>false</followSymlinks>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </plugin>
+                    <!-- Liquibase-plugin -->
+                    <plugin>
+                        <groupId>org.liquibase</groupId>
+                        <artifactId>liquibase-maven-plugin</artifactId>
+                        <version>${liquibase.plugin.version}</version>
+                        <configuration>
+                            <propertyFile>src/main/resources/liquibase/liquibase.properties</propertyFile>
+                            <changeLogFile>
+                                src/main/resources/org/wadzapi/employeeService/persist/dao/changelog/wrightEmployees.changelog.xml
+                            </changeLogFile>
+                            <driver>org.postgresql.Driver</driver>
+                            <url>jdbc:postgresql://localhost:5432/wrightemployees</url>
+                            <username>restadmin01</username>
+                            <password>123456</password>
+                            <logging>debug</logging>
+                            <includeTestOutputDirectory>false</includeTestOutputDirectory>
+                            <defaultSchemaName>public</defaultSchemaName>
+                            <verbose>false</verbose>
+                        </configuration>
+                        <executions>
+                            <!-- Обновление changelog'ов и БД -->
+                            <execution>
+                                <id>update-db-resources</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>update</goal>
+                                </goals>
+                                <configuration/>
+                            </execution>
+                            <!-- Проставление признака обновления
+                                Необходимо для тестов и при ручном накатывании обновления БД
+                                 или после генерации changelog'ов -->
+                            <execution>
+                                <id>offlineSyncLog</id>
+                                <phase>test-compile</phase>
+                                <goals>
+                                    <goal>changelogSync</goal>
+                                </goals>
+                                <configuration/>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <plugin>
                         <artifactId>maven-assembly-plugin</artifactId>
                         <version>2.6</version>

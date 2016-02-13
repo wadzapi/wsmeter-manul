@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--
+        В качестве имплементации испоьзуется HibernateEntityManager над различными профилями БД.
+         - в профиле разработчика и продуктовом используется БД PostgreSQL 9.4
+         - в тестовом профиле используется БД Hypersonic H2 1.4
+         задачу синхронизации призвано решить внедрение Liquibase с запуском при страрте веб-приложения
+    -->
+    <!-- JPA конфигурация (HibernateEntityManager) -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceXmlLocation" value="classpath*:META-INF/persistence.xml"/>
+        <property name="persistenceUnitName" value="PersistenceUnit"/>
+        <property name="packagesToScan" value="org.wadzapi.employeeService.persist.*"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="showSql" value="false"/>
+                <property name="databasePlatform" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
+            </bean>
+        </property>
+    </bean>
+    <!-- Бин-постпроцессор для инъекции сущностей EntityManager в бины-репозитории по аннотации @PersistenceContext -->
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+    <!-- Спринговый бин-менеджер управления потоком и ресурсами транзакций при использовании JPA -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- Бин источника данных в окружении разработчика над драйвером PostgreSql -->
+    <bean name="developerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+        <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/wrightemployees"/>
+        <property name="javax.persistence.jdbc.user" value="restadmin01"/>
+        <property name="javax.persistence.jdbc.password" value="123456"/>
+        <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
+    </bean>
+    <!-- Бин источника данных в продутовом профиле -->
+    <!--<bean name="ProductionDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+        <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/wrightemployees"/>
+        <property name="javax.persistence.jdbc.user" value="restadmin01"/>
+        <property name="javax.persistence.jdbc.password" value="123456"/>
+        <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
+    </bean>-->
+    <!-- Бин источника данных в тестовом профиле-->
+    <bean name="TestDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="connection.driver_class" value="org.h2.Driver"/>
+        <property name="hibernate.connection.url"
+                  value="jdbc:h2:file:./data/employees;DB_CLOSE_ON_EXIT=FALSE;MV_STORE=FALSE;MVCC=FALSE;IFEXISTS=TRUE;ACCESS_MODE_DATA=rw"/>
+        <property name="javax.persistence.jdbc.user" value="sa"/>
+        <property name="javax.persistence.jdbc.password" value=""/>
+        <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+    </bean>
+    <!-- Бин запуска задачи синхронизации конфигураций БД при старте спригового приложения -->
+    <!-- TODO Замена свойств и запуск с различными профилями для тестовв и девелоперского окружения -->
+    <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
+        <property name="dataSource" ref="activeDataSource"/>
+        <property name="changeLog" value="classpath:wrightEmployees.changelog"/>
+        <property name="contexts" value="test, production"/><!--, development" />-->
+    </bean>
+</beans>
